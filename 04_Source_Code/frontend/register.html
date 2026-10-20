@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Account - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="auth-wrapper">
+
+  <div class="auth-container">
+    <div class="auth-header">
+      <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:12px;">
+        <span class="badge-abbr" style="background:#2563eb; color:#fff; width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; font-weight:700; font-size:1.05rem;">HE</span>
+        <span style="font-size:1.3rem; font-weight:700; letter-spacing:-0.02em; color:var(--text-main);">HEMS</span>
+      </div>
+      <h1>Create Your Account</h1>
+      <p>Start planning your events with ease.</p>
+    </div>
+
+    <div class="auth-body">
+      <div id="register-alert" class="alert alert-danger" style="display:none;"></div>
+      <div id="register-success" class="alert alert-success" style="display:none;">
+        Your account has been created successfully.
+      </div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Full Name <span class="required">*</span></label>
+          <input type="text" id="reg-name" name="name" class="form-control" placeholder="e.g. Alex Morgan" required autocomplete="name">
+          <div id="error-name" class="form-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email <span class="required">*</span></label>
+          <input type="email" id="reg-email" name="email" class="form-control" placeholder="name@domain.com" required autocomplete="email">
+          <div id="error-email" class="form-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password <span class="required">*</span></label>
+          <input type="password" id="reg-password" name="password" class="form-control" placeholder="Minimum 6 characters" required autocomplete="new-password">
+          <div id="error-password" class="form-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-confirm-password">Confirm Password <span class="required">*</span></label>
+          <input type="password" id="reg-confirm-password" name="confirmPassword" class="form-control" placeholder="Re-enter password" required autocomplete="new-password">
+          <div id="error-confirmPassword" class="form-error"></div>
+        </div>
+
+        <button type="submit" id="btn-submit-register" class="btn btn-primary w-full" style="padding:11px; margin-top:8px; font-weight:600;">
+          Create Account
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-secondary); border-top: 1px solid var(--border-subtle); padding-top: 18px;">
+        Already have an account? <a href="login.html" class="font-medium" style="color:var(--color-primary);">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const form = document.getElementById('register-form');
+    const alertBox = document.getElementById('register-alert');
+    const successBox = document.getElementById('register-success');
+    const submitBtn = document.getElementById('btn-submit-register');
+
+    async function initPage() {
+      await ApiConfig.init();
+      await AuthService.init();
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+      const errors = {};
+      if (!name || name.length < 2) errors.name = 'Full name must be at least 2 characters.';
+      if (!email || !email.includes('@')) errors.email = 'Please enter a valid email address.';
+      if (!password || password.length < 6) errors.password = 'Password must be at least 6 characters.';
+      if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match.';
+
+      if (Object.keys(errors).length > 0) {
+        Validation.showErrors(form, errors);
+        return;
+      }
+
+      Validation.clearErrors(form);
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
+
+      try {
+        const res = await AuthService.register(name, email, password, 'Event Planner');
+
+        if (res.success) {
+          if (res.needsConfirmation) {
+            successBox.innerHTML = `
+              <div style="font-weight:700; margin-bottom:4px;">Verification Required</div>
+              <div>${res.message}</div>
+              <div style="margin-top:12px;">
+                <a href="login.html" class="btn btn-sm btn-outline">Go to Sign In &rarr;</a>
+              </div>
+            `;
+            successBox.style.display = 'block';
+            form.style.display = 'none';
+          } else {
+            successBox.textContent = 'Your account has been created successfully. Redirecting to your dashboard...';
+            successBox.style.display = 'block';
+            form.reset();
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 600);
+          }
+        } else {
+          alertBox.textContent = res.message || 'Unable to create account. Please check your details and try again.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        alertBox.textContent = 'Unable to create account. Please check your details and try again.';
+        alertBox.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      }
+    });
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospitality and Event Management System</title>
+  <meta name="description" content="Plan your event easily with smart assistance. Create your event, organize tasks, manage your budget, and get a personalized planning plan.">
+  <meta property="og:title" content="Hospitality and Event Management System">
+  <meta property="og:description" content="Plan your event easily with smart assistance. Create your event, organize tasks, manage your budget, and get a personalized planning plan.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .portal-hero {
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 72px 24px 60px;
+      text-align: center;
+      border-bottom: 1px solid #334155;
+    }
+    .portal-hero h1 {
+      color: #ffffff;
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .portal-hero p {
+      color: #94a3b8;
+      max-width: 640px;
+      margin: 0 auto 32px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .portal-content {
+      max-width: 1080px;
+      margin: -32px auto 60px;
+      padding: 0 20px;
+    }
+    .portal-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-topbar" style="background:#0f172a; border-bottom:1px solid #1e293b;">
+    <div class="topbar-zone-left">
+      <a href="index.html" class="sidebar-logo" style="color:#ffffff;">
+        <span class="badge-abbr">HE</span>
+        <span>HEMS</span>
+      </a>
+      <span style="color:#64748b; font-size:0.85rem;">· Event Planning System</span>
+    </div>
+    <div class="topbar-zone-right" style="display:flex; gap:10px;">
+      <a href="login.html" class="btn btn-outline" style="color:#e2e8f0; border-color:#475569;">Sign In</a>
+      <a href="register.html" class="btn btn-primary">Create Account</a>
+    </div>
+  </header>
+
+  <section class="portal-hero">
+    <div style="display:inline-block; padding:4px 14px; background:rgba(37,99,235,0.2); border:1px solid rgba(59,130,246,0.3); border-radius:100px; font-size:0.8rem; color:#93c5fd; margin-bottom:16px; font-weight:600;">
+      Smart Event Planning &amp; Management
+    </div>
+    <h1>Plan your event easily with smart assistance.</h1>
+    <p>Create your event, organize tasks, manage your budget, and get a personalized planning plan.</p>
+    
+    <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+      <a href="register.html" class="btn btn-primary btn-lg" style="padding:12px 28px; font-size:1rem; font-weight:600;">Get Started &rarr;</a>
+      <a href="login.html" class="btn btn-outline btn-lg" style="color:#ffffff; border-color:#475569; padding:12px 28px; font-size:1rem;">Sign In</a>
+    </div>
+  </section>
+
+  <main class="portal-content">
+    <div class="portal-card-grid">
+
+      <!-- Card 1: Event Planning -->
+      <div class="card" style="box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <div class="card-header">
+          <h2 class="card-title" style="font-size:1.15rem;">🎯 Smart Event Planning</h2>
+        </div>
+        <div class="card-body">
+          <p class="text-secondary" style="font-size:0.9rem; line-height:1.6;">
+            Enter your event vision, guest count, and occasion type. Our smart assistant instantly creates a complete requirements plan and suggested checklist.
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="create-event.html" class="btn btn-outline btn-sm w-full">Create an Event &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Tasks & Timeline -->
+      <div class="card" style="box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <div class="card-header">
+          <h2 class="card-title" style="font-size:1.15rem;">📋 Task Timeline</h2>
+        </div>
+        <div class="card-body">
+          <p class="text-secondary" style="font-size:0.9rem; line-height:1.6;">
+            Keep every milestone on schedule. Assign committee leads, track due dates, and monitor preparation progress from start to celebration day.
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="tasks.html" class="btn btn-outline btn-sm w-full">Explore Tasks &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Budget & Expenses -->
+      <div class="card" style="box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <div class="card-header">
+          <h2 class="card-title" style="font-size:1.15rem;">💰 Budget &amp; Expenses</h2>
+        </div>
+        <div class="card-body">
+          <p class="text-secondary" style="font-size:0.9rem; line-height:1.6;">
+            Track real costs against your allocated budget. Monitor variances, record vendor receipts, and avoid unexpected overruns.
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="budget.html" class="btn btn-outline btn-sm w-full">View Budgeting &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer style="text-align:center; padding:32px 20px; color:var(--text-muted); font-size:0.85rem; border-top:1px solid var(--border-subtle);">
+    Event Planning System &copy; 2026. All rights reserved.
+  </footer>
+
+</body>
+</html>

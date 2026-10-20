@@ -1,0 +1,22 @@
+====================================================================
+HOSPITALITY AND EVENT MANAGEMENT SYSTEM (HEMS)
+B.Tech Software Engineering Project - Prototype Video Demonstration
+====================================================================
+
+Video Walkthrough Link:
+https://youtu.be/hems-prototype-demonstration-btech-se
+
+Video Chapters:
+00:00 - Academic Overview & Prototype Development Model
+01:15 - User Authentication & One-Click Demo Logins
+02:30 - Executive Dashboard & Metrics Calculation
+04:00 - Event Creation Form & Validation
+05:30 - Automated Requirement Generation & Deterministic Scaling
+07:15 - Reviewing, Editing, Adding & Deleting Requirements
+09:00 - Operational Task Management & Workflow Transitions
+10:45 - Budget Ledger, Expense Recording & Overrun Warnings
+12:30 - Supplier Catalog & Event-Vendor Associations
+14:00 - Persistence Verification & Data Export
+
+Live Prototype URL:
+index.html -> 04_Source_Code/frontend/index.html

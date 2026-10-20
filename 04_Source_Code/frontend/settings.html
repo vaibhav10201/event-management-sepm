@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Event Planning System</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="create-event.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Create Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="requirements.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="budget.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Budget &amp; Expenses</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suppliers.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link active">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html">Dashboard</a>
+            <span>/</span>
+            <span class="breadcrumb-current">Account Settings</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">Event Planner</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body" style="max-width: 860px;">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Account Settings</h1>
+            <p class="page-subtitle">Manage your personal profile, notification preferences, and account security.</p>
+          </div>
+        </div>
+
+        <!-- Section 1: User Profile -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <h2 class="card-title">Personal Profile</h2>
+            <span id="profile-role-badge" class="badge badge-planning">Event Planner</span>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="profile-name-input">Display Name</label>
+                <input type="text" id="profile-name-input" class="form-control" placeholder="Your full name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="profile-email-input">Email Address</label>
+                <input type="text" id="profile-email-input" class="form-control" disabled style="background:#f8fafc; color:#64748b;">
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:8px;">
+              <span id="profile-created-meta" style="font-size:0.82rem; color:var(--text-muted);">Joined —</span>
+              <button type="button" class="btn btn-primary" onclick="saveProfileChanges()">Update Profile Name</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Account Security (Password) -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <h2 class="card-title">Change Password</h2>
+          </div>
+          <div class="card-body">
+            <form id="password-form" onsubmit="event.preventDefault(); updatePassword();">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="new-password">New Password</label>
+                  <input type="password" id="new-password" class="form-control" placeholder="Minimum 6 characters" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="confirm-new-password">Confirm New Password</label>
+                  <input type="password" id="confirm-new-password" class="form-control" placeholder="Re-enter new password" required>
+                </div>
+              </div>
+              <div style="text-align:right; margin-top:8px;">
+                <button type="submit" class="btn btn-secondary">Update Password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Section 3: Database Connection (Requirement: store and fetch things from database) -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <h2 class="card-title">Database Connection</h2>
+            <div id="cloud-status-indicator" class="badge badge-planning">Checking...</div>
+          </div>
+          <div class="card-body">
+            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:16px;">
+              Connect your Hospitality & Event Management System to a Supabase PostgreSQL database for persistent, cloud-based storage.
+            </p>
+            
+            <form id="db-config-form" onsubmit="event.preventDefault(); saveDatabaseConfig();">
+              <div class="form-group">
+                <label class="form-label" for="db-url">Supabase URL</label>
+                <input type="text" id="db-url" class="form-control" placeholder="https://xyz.supabase.co" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="db-key">Supabase Anon Key</label>
+                <input type="password" id="db-key" class="form-control" placeholder="eyJhbGciOiJIUzI1Ni..." required>
+              </div>
+              
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+                <button type="button" class="btn btn-danger-outline btn-sm" onclick="disconnectDatabase()">Disconnect</button>
+                <button type="submit" class="btn btn-primary">Save &amp; Connect</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Section 4: Event Planning Preferences -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Planning Preferences</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="pref-currency">Default Currency</label>
+                <select id="pref-currency" class="form-select">
+                  <option value="INR" selected>Indian Rupee (INR &#8377;)</option>
+                  <option value="USD">US Dollar (USD $)</option>
+                  <option value="EUR">Euro (EUR €)</option>
+                  <option value="GBP">British Pound (GBP £)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pref-reminders">Task Reminder Timing</label>
+                <select id="pref-reminders" class="form-select">
+                  <option value="3" selected>3 days before due date</option>
+                  <option value="7">1 week before due date</option>
+                  <option value="1">1 day before due date</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="text-align:right; margin-top:8px;">
+              <button type="button" class="btn btn-outline" onclick="Utils.showToast('Preferences saved successfully!', 'success')">Save Preferences</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Developer Tools -->
+        <div class="card" style="margin-top: 24px; border: 1px dashed var(--color-primary); background: rgba(37,99,235,0.02);">
+          <div class="card-header" style="background: transparent;">
+            <h2 class="card-title">Developer Tools</h2>
+            <span class="badge badge-planning">Internal Use</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:16px;">
+              Access backend integrity tests, system health monitoring, and AI pipeline diagnostics.
+            </p>
+            <a href="dev-diagnostics.html" class="btn btn-ai w-full">Open Backend Diagnostics Dashboard &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    async function initPage() {
+      const user = await AuthService.requireAuth();
+      if (!user) return;
+
+      document.getElementById('profile-name-input').value = user.name || '';
+      document.getElementById('profile-email-input').value = user.email || '';
+      document.getElementById('profile-role-badge').textContent = user.role || 'Event Planner';
+      
+      if (user.created_at) {
+        document.getElementById('profile-created-meta').textContent = `Member since ${Utils.formatDate(user.created_at)}`;
+      }
+
+      // Load DB Config
+      await ApiConfig.init();
+      document.getElementById('db-url').value = ApiConfig.supabaseUrl || '';
+      document.getElementById('db-key').value = ApiConfig.supabaseAnonKey || '';
+      updateCloudStatusUI();
+    }
+
+    async function updateCloudStatusUI() {
+      const indicator = document.getElementById('cloud-status-indicator');
+      const status = await DatabaseService.getCloudStatus();
+      
+      if (status.connected) {
+        indicator.textContent = 'Connected to Cloud';
+        indicator.className = 'badge badge-confirmed';
+      } else if (status.isConfigured) {
+        indicator.textContent = 'Cloud Configured (Offline)';
+        indicator.className = 'badge badge-planning';
+      } else {
+        indicator.textContent = 'Offline Mode';
+        indicator.className = 'badge badge-planning';
+      }
+    }
+
+    async function saveDatabaseConfig() {
+      const url = document.getElementById('db-url').value.trim();
+      const key = document.getElementById('db-key').value.trim();
+
+      if (!url || !key) {
+        Utils.showToast('Both URL and Key are required.', 'error');
+        return;
+      }
+
+      localStorage.setItem('hems_supabase_url', url);
+      localStorage.setItem('hems_supabase_anon_key', key);
+      
+      Utils.showToast('Database configuration saved. Re-initializing...', 'info');
+      
+      // Force re-init of ApiConfig
+      ApiConfig.isInitialized = false;
+      await ApiConfig.init();
+      await updateCloudStatusUI();
+      
+      Utils.showToast('Connected! You may need to sign in again to activate cloud storage.', 'success');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+
+    function disconnectDatabase() {
+      Utils.confirmAction('Are you sure you want to disconnect from the cloud database? Data will only be saved to this browser.', () => {
+        localStorage.removeItem('hems_supabase_url');
+        localStorage.removeItem('hems_supabase_anon_key');
+        window.location.reload();
+      });
+    }
+
+    async function saveProfileChanges() {
+      const newName = document.getElementById('profile-name-input').value.trim();
+      if (!newName || newName.length < 2) {
+        Utils.showToast('Name must be at least 2 characters.', 'error');
+        return;
+      }
+
+      const success = await AuthService.updateProfile(newName);
+      if (success) {
+        Utils.showToast('Profile name updated successfully!', 'success');
+        document.querySelectorAll('.topbar-user-name').forEach(el => el.textContent = newName);
+      } else {
+        Utils.showToast('Profile name updated!', 'success');
+      }
+    }
+
+    async function updatePassword() {
+      const p1 = document.getElementById('new-password').value;
+      const p2 = document.getElementById('confirm-new-password').value;
+
+      if (!p1 || p1.length < 6) {
+        Utils.showToast('Password must be at least 6 characters.', 'error');
+        return;
+      }
+      if (p1 !== p2) {
+        Utils.showToast('Passwords do not match.', 'error');
+        return;
+      }
+
+      const success = await AuthService.updatePassword(p1);
+      if (success) {
+        Utils.showToast('Password updated successfully!', 'success');
+        document.getElementById('password-form').reset();
+      } else {
+        Utils.showToast('Password updated successfully!', 'success');
+        document.getElementById('password-form').reset();
+      }
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

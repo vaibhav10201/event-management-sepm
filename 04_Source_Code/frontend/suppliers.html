@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suppliers Catalog - Hospitality and Event Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Official Supabase Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Hospitality &amp; Event Management</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="create-event.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Create Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="requirements.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="budget.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Budget &amp; Expenses</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suppliers.html" class="nav-link active">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html">Dashboard</a>
+            <span>/</span>
+            <span class="breadcrumb-current">Suppliers &amp; Vendors</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">...</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Supplier Directory &amp; Vendor Services</h1>
+            <p class="page-subtitle">Verified directory of catering, sound, decor, and photography providers with event rate contracts.</p>
+          </div>
+
+          <div class="page-actions" style="display:flex; gap:10px;">
+            <button type="button" class="btn btn-secondary" onclick="openAssociateModal()">
+              &#128279; Associate with Event
+            </button>
+            <button type="button" class="btn btn-primary" onclick="openAddSupplierModal()">
+              + Add Supplier
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; gap:10px;">
+            <select id="filter-supplier-cat" class="form-select" style="width:170px; padding:6px 10px; font-size:0.82rem;">
+              <option value="ALL">All Categories</option>
+              <option value="Catering">Catering</option>
+              <option value="Decoration">Decoration</option>
+              <option value="Photography">Photography</option>
+              <option value="Audiovisual">Audiovisual</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Logistics">Logistics</option>
+            </select>
+          </div>
+
+          <input type="text" id="search-supplier" class="form-control" placeholder="Search suppliers by name or city..." style="width:240px; padding:6px 12px; font-size:0.82rem;">
+        </div>
+
+        <!-- Suppliers Grid -->
+        <div class="grid-3" id="suppliers-grid" style="margin-bottom: 30px;">
+          <div class="empty-state" style="grid-column: 1 / -1; padding: 40px 16px;">
+            <div class="empty-state-title">Loading suppliers...</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Associate Supplier with Event -->
+  <div class="modal-backdrop" id="associate-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Associate Supplier with Event</h3>
+        <button class="modal-close" onclick="Utils.closeModal('associate-modal')">&times;</button>
+      </div>
+
+      <form id="associate-form" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="assoc-event-id">Event <span class="required">*</span></label>
+            <select id="assoc-event-id" class="form-select" required>
+              <option value="" disabled selected>Select event...</option>
+            </select>
+            <div id="error-assoc_event" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="assoc-supplier-id">Supplier <span class="required">*</span></label>
+            <select id="assoc-supplier-id" class="form-select" required>
+              <option value="" disabled selected>Select supplier...</option>
+            </select>
+            <div id="error-assoc_supplier" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="assoc-service-id">Specific Service Package (Optional)</label>
+            <select id="assoc-service-id" class="form-select">
+              <option value="">General Contract / Whole Package</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="assoc-agreed-price">Contracted / Agreed Price (INR &#8377;) <span class="required">*</span></label>
+              <input type="number" id="assoc-agreed-price" class="form-control tabular-nums" min="0" step="500" placeholder="e.g. 35000" required>
+              <div id="error-assoc_price" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="assoc-status">Contract Status</label>
+              <select id="assoc-status" class="form-select">
+                <option value="Confirmed" selected>Confirmed</option>
+                <option value="Tentative">Tentative</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="assoc-notes">Terms / Deliverables Notes</label>
+            <textarea id="assoc-notes" class="form-textarea" rows="2" placeholder="Agreed delivery timeline, payment terms, or contact person..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Utils.closeModal('associate-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-assoc">Done</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add New Supplier -->
+  <div class="modal-backdrop" id="supplier-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Register New Supplier</h3>
+        <button class="modal-close" onclick="Utils.closeModal('supplier-modal')">&times;</button>
+      </div>
+
+      <form id="supplier-form" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="sup-name">Supplier / Business Name <span class="required">*</span></label>
+            <input type="text" id="sup-name" class="form-control" placeholder="e.g. Annapurna Royal Caterers" required>
+            <div id="error-sup_name" class="form-error"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sup-category">Primary Category <span class="required">*</span></label>
+              <select id="sup-category" class="form-select" required>
+                <option value="" disabled selected>Select category...</option>
+                <option value="Catering">Catering</option>
+                <option value="Decoration">Decoration</option>
+                <option value="Photography">Photography</option>
+                <option value="Audiovisual">Audiovisual</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Logistics">Logistics</option>
+                <option value="Other">Other</option>
+              </select>
+              <div id="error-sup_category" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sup-rating">Rating (1.0 to 5.0)</label>
+              <input type="number" id="sup-rating" class="form-control" min="1" max="5" step="0.1" value="4.8">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sup-contact">Contact Phone / Email <span class="required">*</span></label>
+              <input type="text" id="sup-contact" class="form-control" placeholder="e.g. +91 98765 43210" required>
+              <div id="error-sup_contact" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sup-location">Operating Location / City <span class="required">*</span></label>
+              <input type="text" id="sup-location" class="form-control" placeholder="e.g. Prayagraj / Campus" required>
+              <div id="error-sup_location" class="form-error"></div>
+            </div>
+          </div>
+
+          <div style="border-top:1px dashed var(--border-subtle); margin:12px 0; padding-top:10px;">
+            <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary);">Primary Service Package</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sup-service-name">Service Name</label>
+            <input type="text" id="sup-service-name" class="form-control" placeholder="e.g. Royal Vegetarian Banquet Buffet">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sup-service-price">Standard Base Rate (INR &#8377;)</label>
+              <input type="number" id="sup-service-price" class="form-control tabular-nums" placeholder="e.g. 450">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Utils.closeModal('supplier-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-supplier">Done</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/suppliers.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let suppliersCache = [];
+    let eventsCache = [];
+
+    async function initSuppliersPage() {
+      const user = await AuthService.requireAuth();
+      if (!user) return;
+
+      suppliersCache = await SupplierService.getSuppliers();
+      eventsCache = await EventService.getEvents();
+
+      // Populate associate modal dropdowns
+      const eventSelect = document.getElementById('assoc-event-id');
+      const supplierSelect = document.getElementById('assoc-supplier-id');
+
+      eventSelect.innerHTML = '<option value="" disabled selected>Select event...</option>' +
+        eventsCache.map(e => `<option value="${e.id}">${Utils.escapeHtml(e.name)}</option>`).join('');
+
+      supplierSelect.innerHTML = '<option value="" disabled selected>Select supplier...</option>' +
+        suppliersCache.map(s => `<option value="${s.id}">${Utils.escapeHtml(s.name)} (${Utils.escapeHtml(s.category)})</option>`).join('');
+
+      supplierSelect.addEventListener('change', (e) => {
+        const selectedId = e.target.value;
+        const sup = suppliersCache.find(s => s.id === selectedId);
+        const serviceSelect = document.getElementById('assoc-service-id');
+
+        if (sup && Array.isArray(sup.supplier_services) && sup.supplier_services.length > 0) {
+          serviceSelect.innerHTML = '<option value="">General Contract / Whole Package</option>' +
+            sup.supplier_services.map(srv => `
+              <option value="${srv.id}" data-price="${srv.price}">
+                ${Utils.escapeHtml(srv.service_name)} (Base: ${Utils.formatCurrency(srv.price)})
+              </option>
+            `).join('');
+        } else {
+          serviceSelect.innerHTML = '<option value="">General Contract / Whole Package</option>';
+        }
+      });
+
+      document.getElementById('assoc-service-id').addEventListener('change', (e) => {
+        const option = e.target.selectedOptions[0];
+        if (option && option.dataset.price) {
+          document.getElementById('assoc-agreed-price').value = option.dataset.price;
+        }
+      });
+
+      document.getElementById('filter-supplier-cat').addEventListener('change', renderSuppliersCatalog);
+      document.getElementById('search-supplier').addEventListener('input', renderSuppliersCatalog);
+
+      renderSuppliersCatalog();
+    }
+
+    function renderSuppliersCatalog() {
+      const catFilter = document.getElementById('filter-supplier-cat').value;
+      const search = document.getElementById('search-supplier').value.toLowerCase().trim();
+
+      const filtered = suppliersCache.filter(s => {
+        const matchCat = (catFilter === 'ALL' || s.category.toLowerCase().includes(catFilter.toLowerCase()));
+        const matchSearch = s.name.toLowerCase().includes(search) || 
+                            s.location.toLowerCase().includes(search) ||
+                            s.category.toLowerCase().includes(search);
+        return matchCat && matchSearch;
+      });
+
+      const container = document.getElementById('suppliers-grid');
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1; padding: 40px 16px;">
+            <div class="empty-state-icon">&#128101;</div>
+            <div class="empty-state-title">No Suppliers Found</div>
+            <div class="empty-state-desc">There are no suppliers matching your filter or search criteria.</div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openAddSupplierModal()">+ Add New Supplier</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(sup => {
+        const services = Array.isArray(sup.supplier_services) ? sup.supplier_services : [];
+
+        return `
+          <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between;">
+            <div class="card-header" style="background:#f8fafc;">
+              <div>
+                <span class="badge badge-planning" style="margin-bottom:4px; display:inline-block;">${Utils.escapeHtml(sup.category)}</span>
+                <h3 class="card-title" style="font-size:1.05rem;">${Utils.escapeHtml(sup.name)}</h3>
+              </div>
+              <div style="font-weight:700; color:#eab308; font-size:0.9rem;">
+                &#9733; ${parseFloat(sup.rating || 4.5).toFixed(1)}
+              </div>
+            </div>
+
+            <div class="card-body" style="font-size:0.84rem;">
+              <div style="margin-bottom:6px; color:var(--text-secondary);">
+                <span>Contact:</span>
+                <strong class="text-main" style="margin-left:4px;">${Utils.escapeHtml(sup.contact)}</strong>
+              </div>
+
+              <div style="margin-bottom:12px; color:var(--text-secondary);">
+                <span>Location:</span>
+                <span class="text-main" style="margin-left:4px;">${Utils.escapeHtml(sup.location)}</span>
+              </div>
+
+              <div style="border-top:1px dashed var(--border-subtle); padding-top:8px;">
+                <div style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-bottom:4px;">Services Catalog</div>
+                ${services.length > 0 ? `
+                  <ul style="padding-left:16px; margin:0; font-size:0.8rem; color:var(--text-secondary);">
+                    ${services.map(srv => `<li>${Utils.escapeHtml(srv.service_name)} - <strong class="text-main font-semibold tabular-nums">${Utils.formatCurrency(srv.price)}</strong></li>`).join('')}
+                  </ul>
+                ` : '<div style="font-size:0.78rem; color:var(--text-muted);">Custom rate per event specifications</div>'}
+              </div>
+            </div>
+
+            <div class="card-footer" style="background:#ffffff; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between;">
+              <button class="btn btn-sm btn-outline" onclick="openAssociateWithPreselected('${sup.id}')">Contract to Event</button>
+              <button class="btn btn-sm btn-danger-outline" onclick="confirmDeleteSupplier('${sup.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openAssociateModal() {
+      if (eventsCache.length === 0) {
+        Utils.showToast('Please create an event first before associating suppliers.', 'error');
+        return;
+      }
+      Utils.openModal('associate-modal');
+    }
+
+    function openAssociateWithPreselected(supplierId) {
+      if (eventsCache.length === 0) {
+        Utils.showToast('Please create an event first before associating suppliers.', 'error');
+        return;
+      }
+      const select = document.getElementById('assoc-supplier-id');
+      select.value = supplierId;
+      select.dispatchEvent(new Event('change'));
+      Utils.openModal('associate-modal');
+    }
+
+    function openAddSupplierModal() {
+      document.getElementById('sup-name').value = '';
+      document.getElementById('sup-category').value = '';
+      document.getElementById('sup-contact').value = '';
+      document.getElementById('sup-location').value = '';
+      document.getElementById('sup-service-name').value = '';
+      document.getElementById('sup-service-price').value = '';
+      Validation.clearErrors(document.getElementById('supplier-form'));
+      Utils.openModal('supplier-modal');
+    }
+
+    async function confirmDeleteSupplier(id) {
+      Utils.confirmAction('Are you sure you want to remove this supplier from the directory?', async () => {
+        await SupplierService.deleteSupplier(id);
+        suppliersCache = await SupplierService.getSuppliers();
+        Utils.showToast('Supplier deleted.', 'info');
+        renderSuppliersCatalog();
+      });
+    }
+
+    // Handle Association Submit
+    document.getElementById('associate-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const eventId = document.getElementById('assoc-event-id').value;
+      const supplierId = document.getElementById('assoc-supplier-id').value;
+      const serviceId = document.getElementById('assoc-service-id').value || null;
+      const agreedPrice = document.getElementById('assoc-agreed-price').value;
+      const status = document.getElementById('assoc-status').value;
+      const notes = document.getElementById('assoc-notes').value;
+
+      if (!eventId || !supplierId || !agreedPrice) {
+        Utils.showToast('Event, Supplier, and Agreed Price are required.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-save-assoc');
+      btn.disabled = true;
+
+      try {
+        const res = await SupplierService.associateSupplierWithEvent({
+          event_id: eventId,
+          supplier_id: supplierId,
+          service_id: serviceId,
+          agreed_price: agreedPrice,
+          status,
+          notes
+        });
+
+        if (res.success) {
+          Utils.showToast('Supplier successfully associated with event!', 'success');
+          Utils.closeModal('associate-modal');
+        } else {
+          Utils.showToast(res.message || 'Association failed.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        Utils.showToast('Error associating supplier.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // Handle Add Supplier Submit
+    document.getElementById('supplier-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('sup-name').value;
+      const category = document.getElementById('sup-category').value;
+      const contact = document.getElementById('sup-contact').value;
+      const location = document.getElementById('sup-location').value;
+      const rating = document.getElementById('sup-rating').value;
+      const serviceName = document.getElementById('sup-service-name').value;
+      const servicePrice = document.getElementById('sup-service-price').value;
+
+      if (!name || !category || !contact || !location) {
+        Utils.showToast('Please fill all mandatory fields.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-save-supplier');
+      btn.disabled = true;
+
+      try {
+        const res = await SupplierService.createSupplier({
+          name, category, contact, location, rating,
+          service_name: serviceName,
+          service_price: servicePrice
+        });
+
+        if (res.success) {
+          Utils.showToast('New supplier registered in catalog!', 'success');
+          Utils.closeModal('supplier-modal');
+          suppliersCache = await SupplierService.getSuppliers();
+          renderSuppliersCatalog();
+        } else {
+          Utils.showToast(res.message || 'Failed to save supplier.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        Utils.showToast('Error saving supplier.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    initSuppliersPage();
+  </script>
+</body>
+</html>

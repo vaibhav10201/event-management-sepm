@@ -1,0 +1,72 @@
+{
+  "system": "Hospitality and Event Management System (HEMS)",
+  "version": "1.0-prototype",
+  "project": "B.Tech Software Engineering Project",
+  "users": [
+    {
+      "id": "usr_1",
+      "name": "Priya Sharma",
+      "email": "manager@hems.ac.in",
+      "password": "manager123",
+      "role": "Event Manager",
+      "created_at": "2026-08-15T09:00:00Z"
+    },
+    {
+      "id": "usr_2",
+      "name": "Dr. A. K. Verma",
+      "email": "admin@hems.ac.in",
+      "password": "admin123",
+      "role": "Administrator",
+      "created_at": "2026-08-01T10:00:00Z"
+    },
+    {
+      "id": "usr_3",
+      "name": "Rahul Verma",
+      "email": "student@mnnit.ac.in",
+      "password": "student123",
+      "role": "Event Manager",
+      "created_at": "2026-09-01T11:30:00Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_1",
+      "user_id": "usr_1",
+      "name": "Rahul's Wedding",
+      "event_type": "Wedding",
+      "event_date": "2026-11-20",
+      "guest_count": 350,
+      "budget": 850000,
+      "location": "Grand Heritage Palace, Jaipur",
+      "description": "Three-day traditional wedding ceremony with reception and cultural sangeet.",
+      "status": "Planning",
+      "created_at": "2026-09-10T10:00:00Z"
+    },
+    {
+      "id": "evt_2",
+      "user_id": "usr_3",
+      "name": "College Cultural Fest",
+      "event_type": "College Event",
+      "event_date": "2026-10-25",
+      "guest_count": 300,
+      "budget": 150000,
+      "location": "MNNIT Campus, Central Auditorium",
+      "description": "Annual college cultural event featuring music competitions, stage plays, and keynote talks.",
+      "status": "Planning",
+      "created_at": "2026-09-15T14:30:00Z"
+    },
+    {
+      "id": "evt_3",
+      "user_id": "usr_1",
+      "name": "Silver Jubilee Birthday Celebration",
+      "event_type": "Birthday",
+      "event_date": "2026-10-15",
+      "guest_count": 60,
+      "budget": 45000,
+      "location": "Silver Oak Banquet Hall, Lucknow",
+      "description": "25th Jubilee surprise birthday bash with DJ music and buffet dinner.",
+      "status": "Confirmed",
+      "created_at": "2026-09-20T16:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="auth-wrapper">
+
+  <div class="auth-container">
+    <div class="auth-header">
+      <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:12px;">
+        <span class="badge-abbr" style="background:#2563eb; color:#fff; width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; font-weight:700; font-size:1.05rem;">HE</span>
+        <span style="font-size:1.3rem; font-weight:700; letter-spacing:-0.02em; color:var(--text-main);">HEMS</span>
+      </div>
+      <h1>Welcome Back</h1>
+      <p>Sign in to continue planning your events.</p>
+    </div>
+
+    <div class="auth-body">
+      <div id="login-alert" class="alert alert-danger" style="display:none;"></div>
+      <div id="login-info" class="alert alert-info" style="display:none;"></div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email <span class="required">*</span></label>
+          <input type="email" id="login-email" name="email" class="form-control" placeholder="name@domain.com" required autocomplete="email">
+          <div id="error-email" class="form-error"></div>
+        </div>
+
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <label class="form-label" for="login-password" style="margin-bottom:0;">Password <span class="required">*</span></label>
+            <button type="button" id="btn-forgot-password" class="text-link" style="background:none; border:none; padding:0; font-size:0.8rem; color:var(--color-primary); cursor:pointer;">
+              Forgot Password?
+            </button>
+          </div>
+          <input type="password" id="login-password" name="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+          <div id="error-password" class="form-error"></div>
+        </div>
+
+        <button type="submit" id="btn-submit-login" class="btn btn-primary w-full" style="padding:11px; margin-top:8px; font-weight:600;">
+          Sign In
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-secondary); border-top: 1px solid var(--border-subtle); padding-top: 18px;">
+        Don't have an account?
+        <div style="margin-top: 10px;">
+          <a href="register.html" class="btn btn-outline w-full" style="font-weight:600;">Create Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const form = document.getElementById('login-form');
+    const alertBox = document.getElementById('login-alert');
+    const infoBox = document.getElementById('login-info');
+    const submitBtn = document.getElementById('btn-submit-login');
+
+    async function initPage() {
+      await ApiConfig.init();
+      await AuthService.init();
+
+      // Check session expiry query parameter
+      const isExpired = Utils.getUrlParam('expired') === 'true';
+      if (isExpired) {
+        alertBox.textContent = 'Your session has ended. Please sign in again.';
+        alertBox.style.display = 'block';
+        // Clear any stale local data immediately
+        localStorage.removeItem('hems_active_user');
+      }
+
+      // Check if registration success banner
+      if (Utils.getUrlParam('registered')) {
+        infoBox.textContent = 'Your account has been created successfully. Please sign in.';
+        infoBox.style.display = 'block';
+      }
+
+      // If user is already logged in, redirect directly to dashboard
+      // BUT NOT if we just arrived here because of an expired session
+      const currentUser = AuthService.getCurrentUser();
+      if (currentUser && !isExpired) {
+        console.log('HEMS: Active user found, redirecting to dashboard...');
+        const redirect = Utils.getUrlParam('redirect') || 'dashboard.html';
+        window.location.href = redirect;
+      } else if (isExpired) {
+        console.warn('HEMS: Page loaded in expired state. User must sign in.');
+      }
+    }
+
+    document.getElementById('btn-forgot-password').addEventListener('click', () => {
+      infoBox.textContent = 'To reset your password, please contact your team administrator or register a new account.';
+      infoBox.style.display = 'block';
+      alertBox.style.display = 'none';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+      infoBox.style.display = 'none';
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      const errors = {};
+      if (!email || !email.includes('@')) errors.email = 'Valid email is required.';
+      if (!password) errors.password = 'Password is required.';
+
+      if (Object.keys(errors).length > 0) {
+        Validation.showErrors(form, errors);
+        return;
+      }
+
+      Validation.clearErrors(form);
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+
+      try {
+        const result = await AuthService.login(email, password);
+
+        if (result.success) {
+          const redirect = Utils.getUrlParam('redirect') || 'dashboard.html';
+          window.location.href = redirect;
+        } else if (result.canActivate) {
+          alertBox.innerHTML = `
+            <div style="font-weight:600; margin-bottom:4px;">Verification Pending</div>
+            <div style="font-size:0.84rem; margin-bottom:10px;">Your user account is in the database, but email verification from the service provider is pending.</div>
+            <button type="button" id="btn-activate-and-signin" class="btn btn-sm btn-primary w-full" style="padding:7px; font-weight:600;">
+              Activate &amp; Sign In &rarr;
+            </button>
+          `;
+          alertBox.style.display = 'block';
+
+          document.getElementById('btn-activate-and-signin').addEventListener('click', async () => {
+            const actBtn = document.getElementById('btn-activate-and-signin');
+            actBtn.disabled = true;
+            actBtn.textContent = 'Activating session...';
+            try {
+              const actRes = await AuthService.activate(email, password);
+              if (actRes.success) {
+                const redirect = Utils.getUrlParam('redirect') || 'dashboard.html';
+                window.location.href = redirect;
+              } else {
+                actBtn.disabled = false;
+                actBtn.textContent = 'Activate & Sign In →';
+              }
+            } catch {
+              actBtn.disabled = false;
+              actBtn.textContent = 'Activate & Sign In →';
+            }
+          });
+        } else {
+          alertBox.textContent = result.message || 'Email or password is incorrect. Please try again.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        alertBox.textContent = 'Email or password is incorrect. Please try again.';
+        alertBox.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    });
+
+    initPage();
+  </script>
+</body>
+</html>

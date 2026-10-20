@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Event - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Event Planning System</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="create-event.html" class="nav-link active">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Create Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="requirements.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="budget.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Budget &amp; Expenses</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suppliers.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html">Dashboard</a>
+            <span>/</span>
+            <span class="breadcrumb-current">Create Your Event</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">Event Planner</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body" style="max-width: 860px;">
+        
+        <!-- Heading & Subheading (Requirement 8) -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Create Your Event</h1>
+            <p class="page-subtitle">Tell us a little about your event. We'll help you plan the rest.</p>
+          </div>
+        </div>
+
+        <!-- Event Creation Form Card -->
+        <div class="card">
+          <form id="create-event-form" novalidate>
+            <div class="card-body">
+              
+              <!-- Field: Event Name -->
+              <div class="form-group">
+                <label class="form-label" for="event-name">Event Name <span class="required">*</span></label>
+                <input type="text" id="event-name" name="name" class="form-control" placeholder="e.g. Annual Gala, Product Launch, Wedding Celebration" required autofocus>
+                <div id="error-name" class="form-error"></div>
+              </div>
+
+              <!-- Field: Event Type & Date -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="event-type">Event Type <span class="required">*</span></label>
+                  <select id="event-type" name="event_type" class="form-select" required>
+                    <option value="" disabled selected>Select event type...</option>
+                    <option value="Conference">Conference / Seminar</option>
+                    <option value="Wedding">Wedding Celebration</option>
+                    <option value="Birthday">Birthday Party</option>
+                    <option value="Corporate">Corporate Gathering</option>
+                    <option value="College Event">College / Academic Event</option>
+                    <option value="Exhibition">Exhibition / Showcase</option>
+                    <option value="Concert">Concert / Musical Evening</option>
+                    <option value="Sports">Sports Tournament</option>
+                    <option value="Other">Other Occasion</option>
+                  </select>
+                  <div id="error-event_type" class="form-error"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="event-date">Event Date <span class="required">*</span></label>
+                  <input type="date" id="event-date" name="event_date" class="form-control" required>
+                  <div id="error-event_date" class="form-error"></div>
+                </div>
+              </div>
+
+              <!-- Field: Guest Count & Budget -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="event-guests">Number of Guests <span class="required">*</span></label>
+                  <input type="number" id="event-guests" name="guest_count" class="form-control tabular-nums" placeholder="e.g. 150" min="1" required>
+                  <div id="error-guest_count" class="form-error"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="event-budget">Budget (INR &#8377;) <span class="required">*</span></label>
+                  <input type="number" id="event-budget" name="budget" class="form-control tabular-nums" placeholder="e.g. 250000" min="1" step="1000" required>
+                  <div id="error-budget" class="form-error"></div>
+                </div>
+              </div>
+
+              <!-- Field: Location & Event Duration -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="event-location">Location</label>
+                  <input type="text" id="event-location" name="location" class="form-control" placeholder="e.g. Grand Ballroom, City Center, Campus Grounds">
+                  <div id="error-location" class="form-error"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="event-duration">Event Duration</label>
+                  <input type="text" id="event-duration" name="duration" class="form-control" placeholder="e.g. 4 hours, Full day, 2 days">
+                </div>
+              </div>
+
+              <!-- Field: Description -->
+              <div class="form-group">
+                <label class="form-label" for="event-description">Description</label>
+                <textarea id="event-description" name="description" class="form-textarea" rows="3" placeholder="Tell us about the purpose of this event, the atmosphere you want to create, or the planned schedule."></textarea>
+              </div>
+
+              <!-- Field: Special Requirements -->
+              <div class="form-group">
+                <label class="form-label" for="event-special-requirements">Special Requirements</label>
+                <textarea id="event-special-requirements" name="special_requirements" class="form-textarea" rows="2" placeholder="Any special needs? e.g. Dietary preferences, stage audio, photography, VIP seating, live streaming..."></textarea>
+              </div>
+
+            </div>
+
+            <!-- Form Actions -->
+            <div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <a href="dashboard.html" class="btn btn-outline" id="btn-cancel">Cancel</a>
+              
+              <div style="display:flex; gap:10px;">
+                <button type="button" id="btn-save-event" class="btn btn-secondary">
+                  Save Event
+                </button>
+                <button type="button" id="btn-generate-requirements" class="btn btn-primary">
+                  Save &amp; Plan Event &rarr;
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/requirements.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/ai-generator.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    async function initPage() {
+      await AuthService.requireAuth();
+
+      // Preset default date (today + 30 days)
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + 30);
+      document.getElementById('event-date').value = futureDate.toISOString().split('T')[0];
+    }
+
+    const form = document.getElementById('create-event-form');
+
+    function getFormData() {
+      return {
+        name: document.getElementById('event-name').value.trim(),
+        event_type: document.getElementById('event-type').value,
+        event_date: document.getElementById('event-date').value,
+        guest_count: document.getElementById('event-guests').value,
+        budget: document.getElementById('event-budget').value,
+        location: document.getElementById('event-location').value.trim(),
+        duration: document.getElementById('event-duration').value.trim(),
+        description: document.getElementById('event-description').value.trim(),
+        special_requirements: document.getElementById('event-special-requirements').value.trim(),
+        status: 'Planning'
+      };
+    }
+
+    async function handleSubmission(goToRequirements = false) {
+      const data = getFormData();
+      const validation = Validation.validateEvent(data);
+
+      if (!validation.isValid) {
+        Validation.showErrors(form, validation.errors);
+        Utils.showToast('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      Validation.clearErrors(form);
+
+      const saveBtn = document.getElementById('btn-save-event');
+      const genBtn = document.getElementById('btn-generate-requirements');
+      saveBtn.disabled = true;
+      genBtn.disabled = true;
+
+      try {
+        const result = await EventService.createEvent(data);
+
+        if (result.success) {
+          const createdEvent = result.event;
+          Utils.showToast('Event created successfully!', 'success');
+
+          if (goToRequirements) {
+            setTimeout(() => {
+              window.location.href = `requirements.html?event_id=${createdEvent.id}&auto_generate=true`;
+            }, 300);
+          } else {
+            setTimeout(() => {
+              window.location.href = `event-details.html?id=${createdEvent.id}`;
+            }, 300);
+          }
+        } else {
+          Utils.showToast(result.message || 'Unable to save event. Please try again.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        Utils.showToast('Unable to save event. Please check your details.', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        genBtn.disabled = false;
+      }
+    }
+
+    document.getElementById('btn-save-event').addEventListener('click', () => {
+      handleSubmission(false);
+    });
+
+    document.getElementById('btn-generate-requirements').addEventListener('click', () => {
+      handleSubmission(true);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSubmission(true);
+    });
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requirements - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Event Planning System</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="create-event.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Create Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="requirements.html" class="nav-link active">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="budget.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Budget &amp; Expenses</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suppliers.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html">Dashboard</a>
+            <span>/</span>
+            <span class="breadcrumb-current">Requirements</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">Event Planner</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Event Requirements</h1>
+            <p class="page-subtitle">Review, organize, and prioritize everything needed for your event.</p>
+          </div>
+
+          <div class="page-actions" id="page-header-actions" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <!-- Event Selector Dropdown -->
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label for="event-select" style="font-size:0.82rem; font-weight:600; color:var(--text-secondary);">Event:</label>
+              <select id="event-select" class="form-select" style="width:240px; font-weight:600; padding:6px 12px; font-size:0.85rem;">
+                <option value="">Loading events...</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-ai" onclick="togglePlanningContext()">
+              &#10022; Refine Planning Context
+            </button>
+            <button type="button" class="btn btn-primary" onclick="openAddRequirementModal()">
+              + Add Requirement
+            </button>
+          </div>
+
+        <!-- Planning Context (Hidden by default, used for AI optimization) -->
+        <div class="card" id="planning-context-card" style="margin-bottom:20px; display:none; background:rgba(37,99,235,0.02); border:1px dashed var(--color-primary);">
+          <div class="card-header">
+            <h3 class="card-title">Refine Planning Context</h3>
+          </div>
+          <div class="card-body">
+            <div class="grid-2" style="gap:20px;">
+              <div>
+                <label class="form-label" style="font-size:0.85rem;">Venue Availability</label>
+                <select id="ctx-venue" class="form-select">
+                  <option value="">Choose...</option>
+                  <option value="Home/House venue already available (0 cost)">Home / Venue available (0 cost)</option>
+                  <option value="Requires venue booking">Requires venue booking</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" style="font-size:0.85rem;">Food Coverage</label>
+                <select id="ctx-food" class="form-select">
+                  <option value="">Choose...</option>
+                  <option value="Cover food for all guests within total budget">Cover food for all guests within budget</option>
+                  <option value="Food budget is separate / handled externally">Food is handled separately</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" style="font-size:0.85rem;">Existing Resources</label>
+                <select id="ctx-resources" class="form-select">
+                  <option value="">Choose...</option>
+                  <option value="Equipment/Decorations are NOT available (Rent everything)">Need to rent everything</option>
+                  <option value="Basic equipment/decorations already available">Basic equipment available</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" style="font-size:0.85rem;">Staffing</label>
+                <select id="ctx-staff" class="form-select">
+                  <option value="">Choose...</option>
+                  <option value="Requires professional paid staff">Requires professional paid staff</option>
+                  <option value="Family / Volunteers will assist (0 cost)">Family / Volunteers will assist</option>
+                </select>
+              </div>
+              <div style="grid-column: span 2;">
+                <label class="form-label" style="font-size:0.85rem;">Additional Context / Answer AI Questions</label>
+                <textarea id="ctx-notes" class="form-textarea" rows="2" placeholder="e.g. Only snacks are needed. We have 50 chairs already. The ₹10,000 must include food for all."></textarea>
+              </div>
+            </div>
+            <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+              <button class="btn btn-outline btn-sm" onclick="togglePlanningContext()">Cancel</button>
+              <button class="btn btn-ai btn-sm" id="btn-trigger-ai">&#10022; Generate Final Plan</button>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- Event Summary Snapshot Bar -->
+        <div class="card" id="event-summary-card" style="margin-bottom:20px; background:#ffffff;">
+          <div class="card-body" style="padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <span id="current-event-type" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); font-weight:600;">Type</span>
+                <h2 id="current-event-name" style="font-size:1.25rem; margin-top:2px;">Select an Event</h2>
+                <div id="current-event-meta" style="font-size:0.82rem; color:var(--text-secondary); margin-top:2px;">—</div>
+              </div>
+
+              <div style="display:flex; gap:24px; align-items:center;">
+                <div style="text-align:right;">
+                  <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Event Budget</div>
+                  <div id="summary-event-budget" class="font-bold tabular-nums" style="font-size:1.2rem; color:var(--text-main);">&#8377;0</div>
+                </div>
+
+                <div style="text-align:right;">
+                  <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Total Estimated Cost</div>
+                  <div id="summary-total-estimated" class="font-bold tabular-nums" style="font-size:1.2rem; color:var(--color-primary);">&#8377;0</div>
+                </div>
+
+                <div style="text-align:right;">
+                  <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Budget Variance</div>
+                  <div id="summary-budget-variance" class="font-semibold tabular-nums" style="font-size:1.1rem; color:var(--color-success);">&#8377;0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Strategy & Insights Card (Hidden by default, shown after AI generation) -->
+        <div class="card" id="ai-insights-card" style="margin-bottom:20px; display:none; border-left:4px solid var(--color-primary);">
+          <div class="card-header" style="background:rgba(37,99,235,0.03);">
+            <h3 class="card-title" style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:1.2rem;">&#10022;</span> AI Planning Insights & Assumptions
+            </h3>
+          </div>
+          <div class="card-body">
+            <div id="ai-overview" style="font-size:0.95rem; line-height:1.6; color:var(--text-main); margin-bottom:16px;"></div>
+            
+            <div class="grid-2" style="gap:20px;">
+              <div id="ai-assumptions-container">
+                <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">Key Assumptions</h4>
+                <ul id="ai-assumptions-list" style="font-size:0.85rem; padding-left:20px; color:var(--text-secondary);"></ul>
+              </div>
+              <div id="ai-questions-container">
+                <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">Follow-up Questions</h4>
+                <ul id="ai-questions-list" style="font-size:0.85rem; padding-left:20px; color:var(--text-secondary);"></ul>
+              </div>
+            </div>
+            
+            <div id="ai-budget-analysis" style="margin-top:16px; padding:12px; border-radius:8px; font-size:0.88rem;"></div>
+          </div>
+        </div>
+
+        <!-- Requirements Table Card -->
+        <div class="card" id="requirements-table-card">
+          <div class="card-header" style="background:#f8fafc;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h3 class="card-title">Requirements Breakdown</h3>
+              <span id="requirements-count-badge" class="badge badge-planning">0 Items</span>
+            </div>
+            
+            <div style="display:flex; gap:10px;">
+              <button id="btn-approve-all" class="btn btn-sm btn-outline" style="display:none; color:var(--color-success); border-color:var(--color-success);" onclick="approveAllProposed()">
+                Approve All Proposals
+              </button>
+
+              <select id="filter-category" class="form-select" style="width:160px; padding:4px 8px; font-size:0.8rem;">
+                <option value="ALL">All Categories</option>
+                <option value="Venue">Venue</option>
+                <option value="Food">Food</option>
+                <option value="Decoration">Decoration</option>
+                <option value="Furniture">Furniture</option>
+                <option value="AV">AV</option>
+                <option value="Staff">Staff</option>
+                <option value="Logistics">Logistics</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <select id="filter-priority" class="form-select" style="width:120px; padding:4px 8px; font-size:0.8rem;">
+                <option value="ALL">All Priorities</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Item & Description</th>
+                    <th class="text-right">Unit</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-right">Unit Cost</th>
+                    <th class="text-right">Total Cost</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="requirements-tbody">
+                  <tr><td colspan="8" class="text-center text-muted" style="padding:24px;">Loading requirements...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-footer" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:0.82rem; color:var(--text-secondary);">
+              Review and edit AI-generated items before final approval.
+            </div>
+            <a href="#" id="link-view-event-dashboard" class="btn btn-secondary btn-sm">View Complete Event Details &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Add / Edit Requirement -->
+  <div class="modal-backdrop" id="requirement-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-req-title">Add Requirement</h3>
+        <button class="modal-close" onclick="Utils.closeModal('requirement-modal')">&times;</button>
+      </div>
+
+      <form id="requirement-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="req-id">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="req-category">Category <span class="required">*</span></label>
+              <select id="req-category" class="form-select" required>
+                <option value="" disabled selected>Select category...</option>
+                <option value="Venue">Venue</option>
+                <option value="Food">Food</option>
+                <option value="Decoration">Decoration</option>
+                <option value="Furniture">Furniture</option>
+                <option value="AV">AV</option>
+                <option value="Staff">Staff</option>
+                <option value="Logistics">Logistics</option>
+                <option value="Other">Other</option>
+              </select>
+              <div id="error-category" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="req-priority">Priority</label>
+              <select id="req-priority" class="form-select">
+                <option value="High">High Priority</option>
+                <option value="Medium" selected>Medium Priority</option>
+                <option value="Low">Low Priority</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="req-item">Requirement Description <span class="required">*</span></label>
+            <input type="text" id="req-item" class="form-control" placeholder="e.g. Wireless Microphones" required>
+            <div id="error-item" class="form-error"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="req-quantity">Quantity <span class="required">*</span></label>
+              <input type="number" id="req-quantity" class="form-control tabular-nums" placeholder="1" min="1" required>
+              <div id="error-quantity" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="req-unit-cost">Unit Cost (INR &#8377;) <span class="required">*</span></label>
+              <input type="number" id="req-unit-cost" class="form-control tabular-nums" placeholder="e.g. 5000" min="0" step="1" required>
+              <div id="error-estimated_cost" class="form-error"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="req-status">Fulfillment Status</label>
+            <select id="req-status" class="form-select">
+              <option value="Pending">Pending Review</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Sourced">Sourced</option>
+              <option value="Fulfilled">Fulfilled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="req-notes">Notes &amp; Vendor Instructions</label>
+            <textarea id="req-notes" class="form-textarea" rows="2" placeholder="Specifications..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Utils.closeModal('requirement-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-req">Done</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/requirements.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/ai-generator.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentEventId = null;
+    let cachedEvent = null;
+    let cachedRequirements = [];
+
+    async function initPage() {
+      await AuthService.requireAuth();
+
+      const events = await EventService.getEvents();
+      const select = document.getElementById('event-select');
+
+      if (!events || events.length === 0) {
+        document.getElementById('current-event-name').textContent = 'No Events Yet';
+        document.getElementById('current-event-meta').textContent = 'Create your first event to start planning.';
+        document.getElementById('requirements-tbody').innerHTML = `
+          <tr>
+            <td colspan="8">
+              <div class="empty-state" style="padding:40px 16px;">
+                <div class="empty-state-icon">&#128197;</div>
+                <div class="empty-state-title">No Events Available</div>
+                <div class="empty-state-desc">You must create an event before generating or managing requirements.</div>
+                <a href="create-event.html" class="btn btn-primary" style="margin-top:12px;">+ Create New Event</a>
+              </div>
+            </td>
+          </tr>
+        `;
+        document.getElementById('btn-trigger-ai').disabled = true;
+        select.innerHTML = '<option value="">No events found</option>';
+        return;
+      }
+
+      // Check query param for active event
+      const paramEventId = Utils.getUrlParam('event_id');
+      const activeEvent = events.find(e => e.id === paramEventId) || events[0];
+      currentEventId = activeEvent.id;
+
+      select.innerHTML = events.map(e => `
+        <option value="${e.id}" ${e.id === currentEventId ? 'selected' : ''}>
+          ${Utils.escapeHtml(e.name)} (${Utils.escapeHtml(e.event_type)})
+        </option>
+      `).join('');
+
+      select.addEventListener('change', async (e) => {
+        currentEventId = e.target.value;
+        Utils.setUrlParam('event_id', currentEventId);
+        await loadEventRequirements();
+      });
+
+      // Check auto_generate trigger from create-event flow
+      if (Utils.getUrlParam('auto_generate') === 'true') {
+        Utils.setUrlParam('auto_generate', null);
+        const existing = await RequirementService.getRequirements(currentEventId);
+        if (existing.length === 0) {
+          await triggerAIGeneration();
+        } else {
+          await loadEventRequirements();
+        }
+      } else {
+        await loadEventRequirements();
+      }
+
+      // Check for deep link to edit a specific item
+      const editId = Utils.getUrlParam('edit_id');
+      if (editId) {
+        // Clear param to avoid re-opening on reload
+        Utils.setUrlParam('edit_id', null);
+        openEditRequirementModal(editId);
+      }
+    }
+
+
+    function togglePlanningContext() {
+      const card = document.getElementById('planning-context-card');
+      if (!card) return;
+      card.style.display = card.style.display === 'none' ? 'block' : 'none';
+      
+      // Auto-detect home venue for convenience
+      if (card.style.display === 'block' && cachedEvent) {
+        const isHome = (cachedEvent.location || '').toLowerCase().includes('home') || (cachedEvent.location || '').toLowerCase().includes('house');
+        if (isHome) {
+          const venueSelect = document.getElementById('ctx-venue');
+          if (venueSelect && !venueSelect.value) {
+            venueSelect.value = 'Home/House venue already available (0 cost)';
+            Utils.showToast('Home venue detected: Pre-selected 0-cost venue optimization.', 'info');
+          }
+        }
+      }
+    }
+
+    async function loadEventRequirements() {
+      cachedEvent = await EventService.getEventById(currentEventId);
+      if (!cachedEvent) return;
+
+      const setSafeText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text || '—';
+      };
+
+      const setSafeHTML = (id, html) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html || '';
+      };
+
+      // Update header
+      setSafeText('current-event-name', cachedEvent.name);
+      setSafeText('current-event-type', cachedEvent.event_type);
+      setSafeText('current-event-meta', `${Utils.formatDate(cachedEvent.event_date)} · ${cachedEvent.guest_count} Attendees · ${cachedEvent.location || 'TBD'}`);
+      setSafeText('summary-event-budget', Utils.formatCurrency(cachedEvent.budget));
+      
+      const dashboardLink = document.getElementById('link-view-event-dashboard');
+      if (dashboardLink) dashboardLink.href = `event-details.html?id=${cachedEvent.id}`;
+
+      // Requirements list
+      cachedRequirements = await RequirementService.getRequirements(currentEventId);
+      console.log(`HEMS UI: Retrieved ${cachedRequirements.length} requirements total.`);
+      
+      const catFilterEl = document.getElementById('filter-category');
+      const priFilterEl = document.getElementById('filter-priority');
+      const catFilter = catFilterEl ? catFilterEl.value : 'ALL';
+      const priFilter = priFilterEl ? priFilterEl.value : 'ALL';
+
+      const filtered = cachedRequirements.filter(r => {
+        const cat = r.category || 'Other';
+        const pri = r.priority || 'Medium';
+        const matchesCat = (catFilter === 'ALL' || cat === catFilter);
+        const matchesPri = (priFilter === 'ALL' || pri === priFilter);
+        return matchesCat && matchesPri;
+      });
+
+      // Compute total estimated cost accurately
+      const totalEstimated = cachedRequirements.reduce((sum, r) => sum + (parseFloat(r.estimated_cost) || 0), 0);
+      document.getElementById('summary-total-estimated').textContent = Utils.formatCurrency(totalEstimated);
+
+      const variance = cachedEvent.budget - totalEstimated;
+      const varianceEl = document.getElementById('summary-budget-variance');
+      if (variance >= 0) {
+        varianceEl.textContent = `+${Utils.formatCurrency(variance)} (Available)`;
+        varianceEl.style.color = 'var(--color-success)';
+      } else {
+        varianceEl.textContent = `${Utils.formatCurrency(variance)} (OVER BUDGET)`;
+        varianceEl.style.color = 'var(--color-danger)';
+      }
+
+      document.getElementById('requirements-count-badge').textContent = `${cachedRequirements.length} Items`;
+      
+      // Toggle "Approve All" if there are pending proposals
+      const hasPending = cachedRequirements.some(r => r.status === 'Pending');
+      document.getElementById('btn-approve-all').style.display = hasPending ? 'inline-block' : 'none';
+
+      const tbody = document.getElementById('requirements-tbody');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9">
+              <div class="empty-state" style="padding:36px 16px;">
+                <div class="empty-state-icon">&#128221;</div>
+                <div class="empty-state-title">No Requirements Listed</div>
+                <div class="empty-state-desc">Refine your context and generate a personalized plan.</div>
+                <div style="display:flex; justify-content:center; gap:10px; margin-top:12px;">
+                  <button type="button" class="btn btn-ai" onclick="togglePlanningContext()">&#10022; Refine & Generate</button>
+                  <button type="button" class="btn btn-outline" onclick="openAddRequirementModal()">+ Add Manually</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(req => {
+        let priClass = 'badge badge-planning'; // Low
+        if (req.priority === 'High') priClass = 'badge badge-danger';
+        else if (req.priority === 'Medium') priClass = 'badge badge-warning';
+
+        let statClass = 'badge badge-planning'; // Pending
+        if (req.status === 'Approved') statClass = 'badge badge-confirmed';
+        else if (req.status === 'Rejected') statClass = 'badge badge-danger';
+        else if (req.status === 'Fulfilled') statClass = 'badge badge-completed';
+
+        return `
+          <tr>
+            <td><span class="font-medium text-main">${Utils.escapeHtml(req.category)}</span></td>
+            <td>
+              <strong class="text-main">${Utils.escapeHtml(req.item)}</strong>
+              <div class="text-muted" style="font-size:0.75rem; margin-top:2px;">${Utils.escapeHtml(req.notes || '')}</div>
+            </td>
+            <td class="text-right">${Utils.escapeHtml(req.unit || 'unit')}</td>
+            <td class="text-right tabular-nums">${req.quantity}</td>
+            <td class="text-right tabular-nums">${Utils.formatCurrency(req.estimated_unit_cost || 0)}</td>
+            <td class="text-right tabular-nums font-semibold">${Utils.formatCurrency(req.estimated_cost)}</td>
+            <td><span class="${priClass}" style="padding:2px 8px; font-size:0.7rem;">${req.priority || 'Medium'}</span></td>
+            <td><span class="${statClass}" style="padding:2px 8px; font-size:0.7rem;">${req.status || 'Pending'}</span></td>
+            <td class="text-right">
+              <div class="table-actions" style="justify-content:flex-end; gap:6px;">
+                <button class="btn btn-xs btn-outline" onclick="openEditRequirementModal('${req.id}')">Edit</button>
+                <button class="btn btn-xs btn-danger-outline" onclick="confirmDeleteRequirement('${req.id}')">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Show AI insights if available
+      updateAIInsightsUI();
+    }
+
+    function updateAIInsightsUI() {
+      const card = document.getElementById('ai-insights-card');
+      const result = window.lastAiAnalysisResult;
+
+      if (!card) return;
+      if (!result || !result.event_summary) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+      // Change border color based on realism
+      card.style.borderLeftColor = result.event_summary.is_budget_realistic ? 'var(--color-success)' : 'var(--color-danger)';
+      
+      const overviewEl = document.getElementById('ai-overview');
+      if (overviewEl) overviewEl.textContent = result.event_summary.overview;
+      
+      const assumptionsList = document.getElementById('ai-assumptions-list');
+      if (assumptionsList) {
+        assumptionsList.innerHTML = (result.event_summary.assumptions || []).map(a => `<li>${Utils.escapeHtml(a)}</li>`).join('');
+      }
+      
+      const questionsList = document.getElementById('ai-questions-list');
+      if (questionsList) {
+        questionsList.innerHTML = (result.event_summary.follow_up_questions || []).map(q => `<li>${Utils.escapeHtml(q)}</li>`).join('');
+      }
+
+      const budgetEl = document.getElementById('ai-budget-analysis');
+      if (budgetEl && result.budget_summary) {
+        const bs = result.budget_summary;
+        const isRealistic = result.event_summary.is_budget_realistic;
+        
+        budgetEl.innerHTML = `
+          <div style="font-weight:600; margin-bottom:4px;">${isRealistic ? '✅ Within Budget' : '⚠️ Budget Constraint Alert'}</div>
+          <div>${bs.message}</div>
+          ${!isRealistic ? '<div style="margin-top:4px; font-size:0.8rem; opacity:0.9;">Consider increasing the budget or reducing the guest count for more realistic options.</div>' : ''}
+        `;
+        
+        budgetEl.style.background = isRealistic ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)';
+        budgetEl.style.color = isRealistic ? 'var(--color-success)' : 'var(--color-danger)';
+        budgetEl.style.border = `1px solid ${isRealistic ? 'var(--color-success)' : 'var(--color-danger)'}`;
+      }
+    }
+
+    async function approveAllProposed() {
+      Utils.confirmAction('Approve all pending requirements? This indicates you have reviewed the estimated costs.', async () => {
+        const pending = cachedRequirements.filter(r => r.status === 'Pending');
+        for (const req of pending) {
+          await RequirementService.updateRequirement(req.id, { status: 'Approved' });
+        }
+        Utils.showToast('All requirements approved.', 'success');
+        await loadEventRequirements();
+      });
+    }
+
+    // Smart Event Plan Generation Trigger
+    async function triggerAIGeneration() {
+      if (!cachedEvent) {
+        cachedEvent = await EventService.getEventById(currentEventId);
+      }
+      if (!cachedEvent) return;
+
+      const existing = await RequirementService.getRequirements(currentEventId);
+      
+      const runAIGen = async (clearExisting) => {
+        const ctxVenue = document.getElementById('ctx-venue').value;
+        const ctxFood = document.getElementById('ctx-food').value;
+        const ctxRes = document.getElementById('ctx-resources').value;
+        const ctxStaff = document.getElementById('ctx-staff').value;
+        const ctxNotes = document.getElementById('ctx-notes').value.trim();
+
+        const refinedNotes = [
+          ctxVenue, ctxFood, ctxRes, ctxStaff, ctxNotes
+        ].filter(Boolean).join('. ');
+
+        const btn = document.getElementById('btn-trigger-ai');
+        btn.disabled = true;
+        btn.textContent = 'Generating Strategy...';
+        Utils.showToast('AI is calculating detailed requirements and budget strategy...', 'info');
+
+        try {
+          const payload = {
+            ...cachedEvent,
+            other_notes: (cachedEvent.other_notes || '') + ' ' + refinedNotes
+          };
+          const generated = await AIRequirementGenerator.generateRequirements(payload);
+          console.log('HEMS AI: Generated raw list:', generated);
+          
+          if (!generated || generated.length === 0) {
+            throw new Error('AI analysis returned an empty requirements list. Please try a more detailed event description.');
+          }
+
+          const saveSuccess = await RequirementService.saveBulkRequirements(currentEventId, generated, clearExisting);
+          
+          // Hide planning context after success
+          document.getElementById('planning-context-card').style.display = 'none';
+          
+          // Also check if suggested tasks were generated
+          if (window.lastAiAnalysisResult && Array.isArray(window.lastAiAnalysisResult.tasks) && window.lastAiAnalysisResult.tasks.length > 0) {
+            const tasksCount = window.lastAiAnalysisResult.tasks.length;
+            await TaskService.saveBulkTasks(currentEventId, window.lastAiAnalysisResult.tasks);
+            Utils.showToast(`Strategy Generated: ${generated.length} requirements & ${tasksCount} tasks.`, 'success');
+          } else {
+            Utils.showToast(`Strategy Generated: ${generated.length} itemized requirements.`, 'success');
+          }
+
+          console.log('HEMS AI: Triggering UI reload...');
+          await loadEventRequirements();
+        } catch (err) {
+          console.error(err);
+          Utils.showToast(err.message || 'AI planning failed. Please try again.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '&#10022; Generate Event Plan';
+        }
+      };
+
+      if (existing.length > 0) {
+        Utils.confirmAction(`This event already has ${existing.length} requirements. REPLACE existing items with the new AI plan? (Cancel means APPEND instead)`, 
+          () => runAIGen(true),
+          () => runAIGen(false)
+        );
+      } else {
+        await runAIGen(false);
+      }
+    }
+
+    document.getElementById('btn-trigger-ai').addEventListener('click', triggerAIGeneration);
+    document.getElementById('filter-category').addEventListener('change', loadEventRequirements);
+    document.getElementById('filter-priority').addEventListener('change', loadEventRequirements);
+
+    // Modal Add / Edit
+    function openAddRequirementModal() {
+      document.getElementById('modal-req-title').textContent = 'Add Requirement';
+      document.getElementById('req-id').value = '';
+      document.getElementById('req-category').value = '';
+      document.getElementById('req-item').value = '';
+      document.getElementById('req-quantity').value = '1';
+      document.getElementById('req-unit-cost').value = '';
+      document.getElementById('req-priority').value = 'Medium';
+      document.getElementById('req-status').value = 'Pending';
+      document.getElementById('req-notes').value = '';
+      Validation.clearErrors(document.getElementById('requirement-form'));
+      Utils.openModal('requirement-modal');
+    }
+
+    async function openEditRequirementModal(id) {
+      const req = await RequirementService.getRequirementById(id);
+      if (!req) return;
+
+      document.getElementById('modal-req-title').textContent = 'Edit Requirement';
+      document.getElementById('req-id').value = req.id;
+      document.getElementById('req-category').value = req.category;
+      document.getElementById('req-item').value = req.item;
+      document.getElementById('req-quantity').value = req.quantity;
+      document.getElementById('req-unit-cost').value = req.estimated_unit_cost || (req.estimated_cost / req.quantity);
+      document.getElementById('req-priority').value = req.priority;
+      document.getElementById('req-status').value = req.status;
+      document.getElementById('req-notes').value = req.notes || '';
+      Validation.clearErrors(document.getElementById('requirement-form'));
+      Utils.openModal('requirement-modal');
+    }
+
+    async function confirmDeleteRequirement(id) {
+      Utils.confirmAction('Are you sure you want to delete this requirement?', async () => {
+        await RequirementService.deleteRequirement(id);
+        Utils.showToast('Requirement removed.', 'info');
+        await loadEventRequirements();
+      });
+    }
+
+    document.getElementById('requirement-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formEl = e.target;
+      const reqId = document.getElementById('req-id').value;
+
+      const qty = parseFloat(document.getElementById('req-quantity').value) || 1;
+      const unitCost = parseFloat(document.getElementById('req-unit-cost').value) || 0;
+
+      const data = {
+        category: document.getElementById('req-category').value,
+        item: document.getElementById('req-item').value.trim(),
+        quantity: qty,
+        estimated_unit_cost: unitCost,
+        estimated_cost: qty * unitCost,
+        priority: document.getElementById('req-priority').value,
+        status: document.getElementById('req-status').value,
+        notes: document.getElementById('req-notes').value.trim()
+      };
+
+      const validation = Validation.validateRequirement(data);
+      if (!validation.isValid) {
+        Validation.showErrors(formEl, validation.errors);
+        return;
+      }
+
+      Validation.clearErrors(formEl);
+      const submitBtn = document.getElementById('btn-submit-req');
+      submitBtn.disabled = true;
+
+      try {
+        if (reqId) {
+          await RequirementService.updateRequirement(reqId, data);
+          Utils.showToast('Requirement updated!', 'success');
+        } else {
+          await RequirementService.createRequirement(currentEventId, data);
+          Utils.showToast('Requirement added!', 'success');
+        }
+        Utils.closeModal('requirement-modal');
+        await loadEventRequirements();
+      } catch (err) {
+        console.error(err);
+        Utils.showToast('Error saving requirement.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    initPage();
+  </script>
+</body>
+</html>
+

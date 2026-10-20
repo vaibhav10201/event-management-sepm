@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backend Diagnostics - HEMS Developer Tools</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <style>
+    .test-card {
+      transition: all 0.2s ease;
+    }
+    .test-card.running { border-color: var(--color-primary); background: rgba(37,99,235,0.02); }
+    .test-card.passed { border-left: 4px solid var(--color-success); }
+    .test-card.failed { border-left: 4px solid var(--color-danger); }
+    .test-card.warning { border-left: 4px solid var(--color-warning); }
+    
+    .test-status-pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .status-not-run { background: #f1f5f9; color: #64748b; }
+    .status-running { background: #eff6ff; color: #2563eb; animation: pulse 1.5s infinite; }
+    .status-passed { background: #ecfdf5; color: #059669; }
+    .status-failed { background: #fef2f2; color: #dc2626; }
+    .status-warning { background: #fffbeb; color: #d97706; }
+    .status-skipped { background: #f8fafc; color: #94a3b8; }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    pre.result-preview {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      max-height: 200px;
+      overflow: auto;
+      margin-top: 10px;
+      border: 1px solid #1e293b;
+    }
+
+    .test-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .report-summary-header {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    @media print {
+      .app-sidebar, .app-topbar, .page-actions, .btn-run-test, .sidebar-toggle-btn {
+        display: none !important;
+      }
+      .app-main { margin: 0 !important; padding: 0 !important; }
+      .content-body { max-width: 100% !important; }
+      .card { break-inside: avoid; border: 1px solid #ddd !important; }
+      body { background: white !important; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS Dev</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Diagnostics</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html" class="nav-link"><span>&larr; Back to App</span></a></li>
+          <li class="nav-item"><a href="#" class="nav-link active"><span>Backend Tests</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Developer Tools</span>
+            <span>/</span>
+            <span class="breadcrumb-current">Backend Diagnostics</span>
+          </div>
+        </div>
+        <div class="topbar-zone-right">
+          <div id="env-label" class="badge badge-planning">Environment: Detecting...</div>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>System Diagnostics</h1>
+            <p class="page-subtitle">Real-time connectivity and integrity testing for HEMS backend services.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-secondary" onclick="window.clearAllResults()">Clear Results</button>
+            <button class="btn btn-outline" onclick="window.saveReportJSON()">Export JSON</button>
+            <button class="btn btn-outline" onclick="window.print()">Print / PDF</button>
+            <button class="btn btn-primary" id="btn-run-all" onclick="window.runAllTests()">Run All Tests</button>
+          </div>
+        </div>
+
+        <!-- Report Summary -->
+        <div class="report-summary-header" id="summary-section">
+          <div style="display:flex; gap:32px;">
+            <div>
+              <div class="stat-label">Total Tests</div>
+              <div class="stat-value" id="count-total">10</div>
+            </div>
+            <div>
+              <div class="stat-label">Passed</div>
+              <div class="stat-value" id="count-passed" style="color:var(--color-success)">0</div>
+            </div>
+            <div>
+              <div class="stat-label">Failed</div>
+              <div class="stat-value" id="count-failed" style="color:var(--color-danger)">0</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div id="overall-status" class="badge badge-planning" style="font-size:1.1rem; padding:8px 16px;">Overall: NOT RUN</div>
+            <div id="last-run-timestamp" style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">No tests executed in this session.</div>
+          </div>
+        </div>
+
+        <div id="test-cards-container" class="grid-1">
+          <!-- Cards will be injected by JavaScript -->
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/requirements.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/diagnostics.js"></script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Dashboard - Hospitality and Event Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Official Supabase Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Hospitality &amp; Event Management</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="create-event.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg><span>Create Event</span></a></li>
+          <li class="nav-item"><a href="requirements.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><span>Requirements</span></a></li>
+          <li class="nav-item"><a href="tasks.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Tasks</span></a></li>
+          <li class="nav-item"><a href="budget.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Budget &amp; Expenses</span></a></li>
+          <li class="nav-item"><a href="suppliers.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Suppliers</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="settings.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html">Dashboard</a>
+            <span>/</span>
+            <span id="breadcrumb-event-name" class="breadcrumb-current">Event Workspace</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">...</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- Page Title & Event Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="detail-type-badge" class="badge badge-planning">Event</span>
+              <span id="detail-status-badge" class="badge badge-confirmed">Status</span>
+            </div>
+            <h1 id="detail-event-title" style="margin-top:4px;">Loading Event Details...</h1>
+            <p id="detail-description" class="page-subtitle">—</p>
+          </div>
+
+          <div class="page-actions" style="display:flex; gap:10px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openEditEventModal()">
+              &#9998; Edit Event
+            </button>
+            <button type="button" id="btn-delete-event" class="btn btn-danger-outline btn-sm">
+              &#128465; Delete Event
+            </button>
+          </div>
+        </div>
+
+        <!-- Event Metadata Summary Grid -->
+        <div class="grid-4" style="margin-bottom:20px;">
+          <div class="stat-card">
+            <div class="stat-header"><span class="stat-label">Event Date</span></div>
+            <div class="stat-value tabular-nums" id="detail-date">—</div>
+            <div class="stat-meta" id="detail-date-meta">Execution day</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header"><span class="stat-label">Guest Count</span></div>
+            <div class="stat-value tabular-nums" id="detail-guests">0</div>
+            <div class="stat-meta">Confirmed attendees</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header"><span class="stat-label">Approved Budget</span></div>
+            <div class="stat-value tabular-nums" id="detail-budget">&#8377;0</div>
+            <div class="stat-meta">Sanctioned ceiling</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header"><span class="stat-label">Disbursed Expenses</span></div>
+            <div class="stat-value tabular-nums" id="detail-expenses">&#8377;0</div>
+            <div class="stat-meta" id="detail-expenses-meta">0% consumed</div>
+          </div>
+        </div>
+
+        <!-- Tabbed Modules View -->
+        <div class="tabs-container">
+          <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('tab-requirements', event)">
+              &#128221; Requirements (<span id="count-reqs">0</span>)
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-tasks', event)">
+              &#9745; Tasks (<span id="count-tasks">0</span>)
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-budget', event)">
+              &#128176; Expenses (<span id="count-expenses">0</span>)
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-suppliers', event)">
+              &#128101; Associated Suppliers (<span id="count-suppliers">0</span>)
+            </button>
+          </div>
+
+          <!-- Tab 1: Requirements -->
+          <div class="tab-pane active" id="tab-requirements">
+            <div class="card" style="border-top-left-radius:0;">
+              <div class="card-header" style="background:#f8fafc;">
+                <h3 class="card-title">Operational Requirements</h3>
+                <a href="#" id="link-manage-reqs" class="btn btn-sm btn-primary">Open Requirements Workspace &rarr;</a>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Category</th>
+                        <th>Item</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Estimated Cost</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th class="text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="event-reqs-tbody">
+                      <tr><td colspan="6" class="text-center text-muted" style="padding:24px;">Loading...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Tasks -->
+          <div class="tab-pane" id="tab-tasks">
+            <div class="card" style="border-top-left-radius:0;">
+              <div class="card-header" style="background:#f8fafc;">
+                <h3 class="card-title">Milestone Tasks</h3>
+                <a href="tasks.html" id="link-manage-tasks" class="btn btn-sm btn-secondary">Open Task Manager &rarr;</a>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Task Title</th>
+                        <th>Category</th>
+                        <th>Due Date</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="event-tasks-tbody">
+                      <tr><td colspan="5" class="text-center text-muted" style="padding:24px;">Loading...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Budget / Expenses -->
+          <div class="tab-pane" id="tab-budget">
+            <div class="card" style="border-top-left-radius:0;">
+              <div class="card-header" style="background:#f8fafc;">
+                <h3 class="card-title">Disbursement Vouchers</h3>
+                <a href="budget.html" id="link-manage-budget" class="btn btn-sm btn-secondary">Open Budget Ledger &rarr;</a>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th class="text-right">Amount</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody id="event-expenses-tbody">
+                      <tr><td colspan="5" class="text-center text-muted" style="padding:24px;">Loading...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Associated Suppliers -->
+          <div class="tab-pane" id="tab-suppliers">
+            <div class="card" style="border-top-left-radius:0;">
+              <div class="card-header" style="background:#f8fafc;">
+                <h3 class="card-title">Contracted Vendors</h3>
+                <a href="suppliers.html" class="btn btn-sm btn-secondary">Open Supplier Catalog &rarr;</a>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Supplier</th>
+                        <th>Category</th>
+                        <th>Service Contract</th>
+                        <th class="text-right">Agreed Rate</th>
+                        <th>Status</th>
+                        <th class="text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="event-suppliers-tbody">
+                      <tr><td colspan="6" class="text-center text-muted" style="padding:24px;">Loading...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Edit Event -->
+  <div class="modal-backdrop" id="edit-event-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Event Parameters</h3>
+        <button class="modal-close" onclick="Utils.closeModal('edit-event-modal')">&times;</button>
+      </div>
+
+      <form id="edit-event-form" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="edit-name">Event Name <span class="required">*</span></label>
+            <input type="text" id="edit-name" name="name" class="form-control" required>
+            <div id="error-name" class="form-error"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-type">Event Type <span class="required">*</span></label>
+              <select id="edit-type" name="event_type" class="form-select" required>
+                <option value="College Event">College / Academic Event</option>
+                <option value="Conference">Conference / Seminar</option>
+                <option value="Wedding">Wedding Celebration</option>
+                <option value="Birthday">Birthday Gathering</option>
+                <option value="Corporate">Corporate Meeting / Gala</option>
+                <option value="Exhibition">Exhibition / Trade Fair</option>
+                <option value="Concert">Concert / Cultural Fest</option>
+                <option value="Sports">Sports Tournament</option>
+                <option value="Other">Other Occasion</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="edit-date">Event Date <span class="required">*</span></label>
+              <input type="date" id="edit-date" name="event_date" class="form-control" required>
+              <div id="error-event_date" class="form-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-guests">Guest Count <span class="required">*</span></label>
+              <input type="number" id="edit-guests" name="guest_count" class="form-control tabular-nums" min="1" required>
+              <div id="error-guest_count" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="edit-budget">Budget (INR &#8377;) <span class="required">*</span></label>
+              <input type="number" id="edit-budget" name="budget" class="form-control tabular-nums" min="1" step="1000" required>
+              <div id="error-budget" class="form-error"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-location">Location / Venue</label>
+            <input type="text" id="edit-location" name="location" class="form-control">
+            <div id="error-location" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-status">Status</label>
+            <select id="edit-status" class="form-select">
+              <option value="Draft">Draft</option>
+              <option value="Planning">Planning</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-description">Description</label>
+            <textarea id="edit-description" class="form-textarea" rows="2"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-duration">Duration</label>
+              <input type="text" id="edit-duration" class="form-control" placeholder="e.g. 4 hours, Full Day">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-special-requirements">Special Requirements</label>
+            <textarea id="edit-special-requirements" class="form-textarea" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Utils.closeModal('edit-event-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-event-changes">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/requirements.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/suppliers.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentEvent = null;
+    let eventId = null;
+
+    async function initEventDetails() {
+      const user = await AuthService.requireAuth();
+      if (!user) return;
+
+      eventId = Utils.getUrlParam('id');
+      if (!eventId) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      await loadEventData();
+      
+      // Attach delete listener
+      const deleteBtn = document.getElementById('btn-delete-event');
+      if (deleteBtn && !deleteBtn.dataset.listenerAttached) {
+        deleteBtn.dataset.listenerAttached = 'true'; // Set immediately to prevent race conditions
+        deleteBtn.addEventListener('click', confirmDeleteCurrentEvent);
+      }
+    }
+
+    async function loadEventData() {
+      currentEvent = await EventService.getEventById(eventId);
+
+      if (!currentEvent) {
+        alert('Event not found or has been removed.');
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      // Title & Header Badges
+      document.getElementById('detail-event-title').textContent = currentEvent.name;
+      document.getElementById('breadcrumb-event-name').textContent = currentEvent.name;
+      document.getElementById('detail-description').textContent = currentEvent.description || 'No description provided for this event.';
+      document.getElementById('detail-type-badge').textContent = currentEvent.event_type;
+      document.getElementById('detail-status-badge').textContent = currentEvent.status;
+
+      // Stats
+      document.getElementById('detail-date').textContent = Utils.formatDate(currentEvent.event_date);
+      document.getElementById('detail-guests').textContent = `${currentEvent.guest_count} Attendees`;
+      document.getElementById('detail-budget').textContent = Utils.formatCurrency(currentEvent.budget);
+
+      // Deep Links
+      document.getElementById('link-manage-reqs').href = `requirements.html?event_id=${currentEvent.id}`;
+      document.getElementById('link-manage-tasks').href = `tasks.html?event_id=${currentEvent.id}`;
+      document.getElementById('link-manage-budget').href = `budget.html?event_id=${currentEvent.id}`;
+
+      // Load Sub-Entities
+      const [reqs, tasks, expenses, suppliers] = await Promise.all([
+        RequirementService.getRequirements(eventId),
+        TaskService.getTasks(eventId),
+        BudgetService.getExpenses(eventId),
+        SupplierService.getEventSuppliers(eventId)
+      ]);
+
+      // Tab Counts
+      document.getElementById('count-reqs').textContent = reqs.length;
+      document.getElementById('count-tasks').textContent = tasks.length;
+      document.getElementById('count-expenses').textContent = expenses.length;
+      document.getElementById('count-suppliers').textContent = suppliers.length;
+
+      // Actual expenses calculation
+      const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
+      document.getElementById('detail-expenses').textContent = Utils.formatCurrency(totalExpenses);
+      const pct = currentEvent.budget > 0 ? Math.round((totalExpenses / currentEvent.budget) * 100) : 0;
+      document.getElementById('detail-expenses-meta').textContent = `${pct}% of budget spent`;
+
+      // Render Tab Tables
+      renderRequirementsTable(reqs);
+      renderTasksTable(tasks);
+      renderExpensesTable(expenses);
+      renderSuppliersTable(suppliers);
+    }
+
+    function renderRequirementsTable(reqs) {
+      const tbody = document.getElementById('event-reqs-tbody');
+      if (reqs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding:24px;">No requirements listed yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = reqs.map(r => `
+        <tr>
+          <td><span class="badge badge-planning">${Utils.escapeHtml(r.category)}</span></td>
+          <td><strong>${Utils.escapeHtml(r.item)}</strong></td>
+          <td class="text-right tabular-nums">${r.quantity}</td>
+          <td class="text-right tabular-nums font-semibold">${Utils.formatCurrency(r.estimated_cost)}</td>
+          <td><span class="badge badge-planning">${r.priority}</span></td>
+          <td><span class="badge badge-confirmed">${r.status}</span></td>
+          <td class="text-right">
+            <div class="table-actions" style="justify-content:flex-end; gap:6px;">
+              <button class="btn btn-xs btn-outline" onclick="openRequirementEdit('${r.id}')">Edit</button>
+              <button class="btn btn-xs btn-danger-outline" onclick="deleteRequirementItem('${r.id}')">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function openRequirementEdit(id) {
+      // Redirect to requirements page with specific ID for editing (simple way to reuse logic)
+      window.location.href = `requirements.html?event_id=${eventId}&edit_id=${id}`;
+    }
+
+    async function deleteRequirementItem(id) {
+      Utils.confirmAction('Are you sure you want to delete this requirement?', async () => {
+        await RequirementService.deleteRequirement(id);
+        Utils.showToast('Requirement removed.', 'info');
+        await loadEventData();
+      });
+    }
+
+    function renderTasksTable(tasks) {
+      const tbody = document.getElementById('event-tasks-tbody');
+      if (tasks.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding:24px;">No tasks assigned yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = tasks.map(t => `
+        <tr>
+          <td><strong>${Utils.escapeHtml(t.title)}</strong></td>
+          <td><span class="badge badge-planning">${Utils.escapeHtml(t.category || 'General')}</span></td>
+          <td class="tabular-nums">${Utils.formatDate(t.due_date)}</td>
+          <td>${Utils.escapeHtml(t.assigned_to || 'Unassigned')}</td>
+          <td><span class="badge ${t.status === 'Completed' ? 'badge-completed' : 'badge-planning'}">${t.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderExpensesTable(expenses) {
+      const tbody = document.getElementById('event-expenses-tbody');
+      if (expenses.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding:24px;">No expense disbursements recorded yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = expenses.map(e => `
+        <tr>
+          <td class="tabular-nums">${Utils.formatDate(e.date_incurred || e.date)}</td>
+          <td><span class="badge badge-planning">${Utils.escapeHtml(e.category)}</span></td>
+          <td><strong>${Utils.escapeHtml(e.description || e.item)}</strong></td>
+          <td class="text-right tabular-nums font-semibold">${Utils.formatCurrency(e.amount)}</td>
+          <td><span class="text-secondary" style="font-size:0.8rem;">${Utils.escapeHtml(e.notes || '—')}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderSuppliersTable(suppliers) {
+      const tbody = document.getElementById('event-suppliers-tbody');
+      if (suppliers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding:24px;">No suppliers contracted yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = suppliers.map(s => {
+        const supName = s.suppliers ? s.suppliers.name : 'Unknown';
+        const supCat = s.suppliers ? s.suppliers.category : 'General';
+        const srvName = s.supplier_services ? s.supplier_services.service_name : 'General Contract';
+
+        return `
+          <tr>
+            <td><strong>${Utils.escapeHtml(supName)}</strong></td>
+            <td><span class="badge badge-planning">${Utils.escapeHtml(supCat)}</span></td>
+            <td>${Utils.escapeHtml(srvName)}</td>
+            <td class="text-right tabular-nums font-semibold">${Utils.formatCurrency(s.agreed_price)}</td>
+            <td><span class="badge badge-confirmed">${s.status}</span></td>
+            <td class="text-right">
+              <button class="btn btn-sm btn-danger-outline" onclick="removeSupplierLink('${s.id}')">Disconnect</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function removeSupplierLink(assocId) {
+      Utils.confirmAction('Disconnect this supplier from the event?', async () => {
+        await SupplierService.removeEventSupplier(assocId);
+        Utils.showToast('Supplier contract removed.', 'info');
+        await loadEventData();
+      });
+    }
+
+    function switchTab(tabId, event) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      } else if (window.event && window.event.currentTarget) {
+         window.event.currentTarget.classList.add('active');
+      }
+      
+      const pane = document.getElementById(tabId);
+      if (pane) pane.classList.add('active');
+    }
+
+    function openEditEventModal() {
+      if (!currentEvent) return;
+      document.getElementById('edit-name').value = currentEvent.name;
+      document.getElementById('edit-type').value = currentEvent.event_type;
+      document.getElementById('edit-date').value = currentEvent.event_date;
+      document.getElementById('edit-guests').value = currentEvent.guest_count;
+      document.getElementById('edit-budget').value = currentEvent.budget;
+      document.getElementById('edit-location').value = currentEvent.location || '';
+      document.getElementById('edit-status').value = currentEvent.status;
+      document.getElementById('edit-description').value = currentEvent.description || '';
+      document.getElementById('edit-duration').value = currentEvent.duration || '';
+      document.getElementById('edit-special-requirements').value = currentEvent.special_requirements || '';
+      Validation.clearErrors(document.getElementById('edit-event-form'));
+      Utils.openModal('edit-event-modal');
+    }
+
+    async function confirmDeleteCurrentEvent() {
+      console.log('HEMS: Delete request for event:', eventId);
+      
+      if (!eventId) {
+        Utils.showToast('Unable to identify event for deletion.', 'error');
+        return;
+      }
+
+      const eventName = currentEvent ? currentEvent.name : 'this event';
+      Utils.confirmAction(`Are you sure you want to permanently delete "${eventName}"? All associated requirements, tasks, and expenses will also be removed.`, async () => {
+        const btn = document.getElementById('btn-delete-event');
+        const originalHtml = btn ? btn.innerHTML : 'Delete Event';
+        
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Deleting...';
+        }
+
+        try {
+          console.log('HEMS: Initiating deletion sequence...');
+          const success = await EventService.deleteEvent(eventId);
+          
+          if (success) {
+            Utils.showToast('Event deleted successfully.', 'success');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 800);
+          } else {
+            throw new Error('Deletion service returned failure.');
+          }
+        } catch (err) {
+          console.error('HEMS: Delete event crash:', err);
+          Utils.showToast('Failed to delete event. Please try again.', 'error');
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+          }
+        }
+      });
+    }
+
+    document.getElementById('edit-event-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formEl = e.target;
+
+      const data = {
+        name: document.getElementById('edit-name').value,
+        event_type: document.getElementById('edit-type').value,
+        event_date: document.getElementById('edit-date').value,
+        guest_count: document.getElementById('edit-guests').value,
+        budget: document.getElementById('edit-budget').value,
+        location: document.getElementById('edit-location').value,
+        status: document.getElementById('edit-status').value,
+        description: document.getElementById('edit-description').value,
+        duration: document.getElementById('edit-duration').value,
+        special_requirements: document.getElementById('edit-special-requirements').value
+      };
+
+      const validation = Validation.validateEvent(data);
+      if (!validation.isValid) {
+        Validation.showErrors(formEl, validation.errors);
+        return;
+      }
+
+      const saveBtn = document.getElementById('btn-save-event-changes');
+      saveBtn.disabled = true;
+
+      try {
+        const result = await EventService.updateEvent(eventId, data);
+        if (result.success) {
+          Utils.showToast('Event updated successfully!', 'success');
+          Utils.closeModal('edit-event-modal');
+          await loadEventData();
+        } else {
+          Utils.showToast(result.message || 'Failed to update event.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        Utils.showToast('An unexpected error occurred while updating the event.', 'error');
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
+    initEventDetails();
+  </script>
+</body>
+</html>

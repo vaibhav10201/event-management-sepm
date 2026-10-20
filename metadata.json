@@ -1,0 +1,6 @@
+{
+  "name": "Hospitality and Event Management System",
+  "description": "Plan your event easily with smart assistance. Create your event, organize tasks, manage your budget, and get a personalized planning plan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

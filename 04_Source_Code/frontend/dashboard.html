@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Events - Event Planning System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:,">
+  <!-- Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <span class="badge-abbr">HE</span>
+          <span>HEMS</span>
+        </a>
+        <div class="sidebar-subline">Event Planning System</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link active">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="create-event.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Create Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="requirements.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="budget.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Budget &amp; Expenses</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suppliers.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="academic-tag" style="background:rgba(37,99,235,0.08); color:#2563eb; border-color:rgba(37,99,235,0.2);">Event Workspace</span>
+        <span>Version 1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      <!-- Top Bar -->
+      <header class="app-topbar">
+        <div class="topbar-zone-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Event Management</span>
+            <span>/</span>
+            <span class="breadcrumb-current">Your Events</span>
+          </div>
+        </div>
+
+        <div class="topbar-zone-right">
+          <div id="dashboard-cloud-status" class="badge badge-planning" style="margin-right:12px; cursor:pointer;" onclick="window.location.href='settings.html'">Checking Cloud...</div>
+          <div class="user-profile-badge">
+            <div class="user-avatar-initials topbar-user-avatar">--</div>
+            <div class="user-details-compact">
+              <div class="user-name topbar-user-name">Loading...</div>
+              <div class="user-role topbar-user-role">Event Planner</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm btn-logout">Sign Out</button>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <div class="content-body">
+        
+        <!-- Page Title & Primary Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Your Events</h1>
+            <p class="page-subtitle">Plan, organize, and manage all your events in one place.</p>
+          </div>
+          <div class="page-actions">
+            <a href="create-event.html" class="btn btn-primary" id="btn-top-create-event">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px; height:16px; margin-right:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              + Create New Event
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards Grid (Requirement 6) -->
+        <div class="grid-4" style="margin-bottom: 24px;">
+          <!-- Card 1: Upcoming Events -->
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Upcoming Events</span>
+              <div class="stat-icon" style="background:#eff6ff; color:#2563eb;">&#128197;</div>
+            </div>
+            <div class="stat-value tabular-nums" id="stat-upcoming-events">0</div>
+            <div class="stat-meta">Scheduled ahead</div>
+          </div>
+
+          <!-- Card 2: Active Plans -->
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Active Plans</span>
+              <div class="stat-icon" style="background:#f0fdf4; color:#16a34a;">&#9989;</div>
+            </div>
+            <div class="stat-value tabular-nums" id="stat-active-plans">0</div>
+            <div class="stat-meta">In planning or confirmed</div>
+          </div>
+
+          <!-- Card 3: Pending Tasks -->
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Pending Tasks</span>
+              <div class="stat-icon" style="background:#fef2f2; color:#dc2626;">&#9998;</div>
+            </div>
+            <div class="stat-value tabular-nums" id="stat-pending-tasks">0</div>
+            <div class="stat-meta">Awaiting completion</div>
+          </div>
+
+          <!-- Card 4: Total Budget -->
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Total Budget</span>
+              <div class="stat-icon" style="background:#faf5ff; color:#9333ea;">&#8377;</div>
+            </div>
+            <div class="stat-value tabular-nums" id="stat-total-budget">&#8377;0</div>
+            <div class="stat-meta">Across all your events</div>
+          </div>
+        </div>
+
+        <!-- Events Section Header & Search -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="font-size:1.15rem; font-weight:600; color:var(--text-main); margin:0;">Active Events</h2>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin:2px 0 0 0;">Select an event to view details, requirements, tasks, and budget.</p>
+          </div>
+
+          <div style="display:flex; gap:10px; align-items:center;" id="filter-controls-group">
+            <input type="text" id="event-search" class="form-control" placeholder="Search events..." style="width:200px; padding:6px 12px; font-size:0.82rem;">
+            <select id="event-filter-status" class="form-select" style="width:140px; padding:6px 12px; font-size:0.82rem;">
+              <option value="ALL">All Statuses</option>
+              <option value="Planning">Planning</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Completed">Completed</option>
+              <option value="Draft">Draft</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Event Cards Grid / Empty State (Requirement 7) -->
+        <div class="grid-3" id="events-grid-container" style="margin-bottom: 28px;">
+          <div class="empty-state" style="grid-column: 1 / -1; padding: 48px 20px;">
+            <div class="empty-state-title">Loading your events...</div>
+          </div>
+        </div>
+
+        <!-- Section: Overview Table -->
+        <div class="card" id="events-table-card" style="display:none;">
+          <div class="card-header">
+            <h3 class="card-title">Recent Events</h3>
+            <span class="text-muted" style="font-size:0.8rem;">All Events Summary</span>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Event Name</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th class="text-right">Guests</th>
+                    <th class="text-right">Budget</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-events-tbody">
+                  <tr><td colspan="7" class="text-center text-muted" style="padding:24px;">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let allEvents = [];
+
+    async function initDashboard() {
+      const user = await AuthService.requireAuth();
+      if (!user) return;
+
+      try {
+        const eventsData = await EventService.getEvents();
+        const tasksData = await TaskService.getTasks();
+        
+        allEvents = Array.isArray(eventsData) ? eventsData : [];
+        const allTasks = Array.isArray(tasksData) ? tasksData : [];
+
+        // Calculate KPI metrics
+        const totalBudget = allEvents.reduce((sum, e) => sum + (parseFloat(e.budget) || 0), 0);
+        const upcomingEvents = allEvents.filter(e => {
+          const d = new Date(e.event_date);
+          return !isNaN(d) && d >= new Date();
+        }).length;
+        const activePlans = allEvents.filter(e => e.status === 'Planning' || e.status === 'Confirmed').length;
+        const pendingTasks = allTasks.filter(t => t.status !== 'Completed').length;
+
+        document.getElementById('stat-upcoming-events').textContent = upcomingEvents;
+        document.getElementById('stat-active-plans').textContent = activePlans;
+        document.getElementById('stat-pending-tasks').textContent = pendingTasks;
+        document.getElementById('stat-total-budget').textContent = Utils.formatCurrency(totalBudget);
+
+        renderEvents(allEvents);
+        updateCloudStatusBadge();
+      } catch (err) {
+        console.error(err);
+        renderEmptyState();
+      }
+    }
+
+    async function updateCloudStatusBadge() {
+      const badge = document.getElementById('dashboard-cloud-status');
+      if (!badge) return;
+      
+      const status = await DatabaseService.getCloudStatus();
+      if (status.connected) {
+        badge.textContent = 'Cloud Connected';
+        badge.className = 'badge badge-confirmed';
+        badge.title = status.message;
+      } else if (status.isConfigured) {
+        badge.textContent = 'Cloud Offline';
+        badge.className = 'badge badge-planning';
+        badge.title = 'Configured but not signed in.';
+      } else {
+        badge.textContent = 'Local Mode';
+        badge.className = 'badge badge-planning';
+        badge.title = 'No cloud database connected.';
+      }
+    }
+
+    function renderEmptyState() {
+      const grid = document.getElementById('events-grid-container');
+      const tableCard = document.getElementById('events-table-card');
+      const filterGroup = document.getElementById('filter-controls-group');
+      
+      tableCard.style.display = 'none';
+      if (filterGroup) filterGroup.style.display = 'none';
+
+      // Human-friendly empty state according to Requirement 7
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column: 1 / -1; padding: 56px 24px; text-align: center; background: #ffffff; border: 1px dashed var(--border-subtle); border-radius: 12px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🎉</div>
+          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Let's plan your first event</h2>
+          <p style="max-width: 520px; margin: 0 auto 24px auto; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+            Create an event and we'll help you organize the requirements, tasks, budget, and timeline.
+          </p>
+          <a href="create-event.html" class="btn btn-primary btn-lg" style="padding: 12px 24px; font-weight: 600; font-size: 1rem;">
+            Create My First Event &rarr;
+          </a>
+        </div>
+      `;
+    }
+
+    function renderEvents(events) {
+      const grid = document.getElementById('events-grid-container');
+      const tableCard = document.getElementById('events-table-card');
+      const tbody = document.getElementById('recent-events-tbody');
+      const filterGroup = document.getElementById('filter-controls-group');
+
+      if (!events || events.length === 0) {
+        renderEmptyState();
+        return;
+      }
+
+      tableCard.style.display = 'block';
+      if (filterGroup) filterGroup.style.display = 'flex';
+
+      // Render Cards Grid
+      grid.innerHTML = events.map(evt => {
+        let badgeClass = 'badge-planning';
+        if (evt.status === 'Confirmed') badgeClass = 'badge-confirmed';
+        else if (evt.status === 'Completed') badgeClass = 'badge-completed';
+
+        return `
+          <div class="card event-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div class="card-body">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                <span class="badge ${badgeClass}">${Utils.escapeHtml(evt.status || 'Planning')}</span>
+                <span style="font-size:0.78rem; color:var(--text-muted);">${Utils.escapeHtml(evt.event_type)}</span>
+              </div>
+              <h3 style="font-size:1.15rem; font-weight:600; margin-bottom:8px; color:var(--text-main);">
+                <a href="event-details.html?id=${evt.id}" style="color:inherit; text-decoration:none;">
+                  ${Utils.escapeHtml(evt.name)}
+                </a>
+              </h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:16px; line-height:1.4; min-height:38px;">
+                ${Utils.escapeHtml(evt.description ? Utils.truncate(evt.description, 80) : 'No description provided.')}
+              </p>
+              <div style="font-size:0.82rem; color:var(--text-secondary); display:flex; flex-direction:column; gap:4px; border-top:1px solid var(--border-subtle); padding-top:12px;">
+                <div style="display:flex; justify-content:space-between;">
+                  <span>Date:</span>
+                  <strong class="text-main">${Utils.formatDate(evt.event_date)}</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>Guests:</span>
+                  <strong class="text-main">${evt.guest_count}</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>Budget:</span>
+                  <strong class="text-main">${Utils.formatCurrency(evt.budget)}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer" style="display:flex; justify-content:space-between; gap:8px;">
+              <a href="requirements.html?event_id=${evt.id}" class="btn btn-outline btn-sm flex-1" style="text-align:center;">Requirements</a>
+              <a href="event-details.html?id=${evt.id}" class="btn btn-primary btn-sm flex-1" style="text-align:center;">View Event &rarr;</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render Summary Table
+      tbody.innerHTML = events.slice(0, 10).map(evt => {
+        let badgeClass = 'badge-planning';
+        if (evt.status === 'Confirmed') badgeClass = 'badge-confirmed';
+        else if (evt.status === 'Completed') badgeClass = 'badge-completed';
+
+        return `
+          <tr>
+            <td>
+              <strong><a href="event-details.html?id=${evt.id}" style="color:var(--color-primary); text-decoration:none;">${Utils.escapeHtml(evt.name)}</a></strong>
+            </td>
+            <td>${Utils.escapeHtml(evt.event_type)}</td>
+            <td>${Utils.formatDate(evt.event_date)}</td>
+            <td class="text-right tabular-nums">${evt.guest_count}</td>
+            <td class="text-right tabular-nums font-semibold">${Utils.formatCurrency(evt.budget)}</td>
+            <td><span class="badge ${badgeClass}">${evt.status}</span></td>
+            <td class="text-right">
+              <a href="event-details.html?id=${evt.id}" class="btn btn-sm btn-outline">Details</a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Filter and search handlers
+    document.getElementById('event-search').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const st = document.getElementById('event-filter-status').value;
+      const filtered = allEvents.filter(ev => {
+        const matchesQ = ev.name.toLowerCase().includes(q) || ev.event_type.toLowerCase().includes(q);
+        const matchesSt = st === 'ALL' || ev.status === st;
+        return matchesQ && matchesSt;
+      });
+      renderEvents(filtered);
+    });
+
+    document.getElementById('event-filter-status').addEventListener('change', (e) => {
+      const st = e.target.value;
+      const q = document.getElementById('event-search').value.toLowerCase().trim();
+      const filtered = allEvents.filter(ev => {
+        const matchesQ = ev.name.toLowerCase().includes(q) || ev.event_type.toLowerCase().includes(q);
+        const matchesSt = st === 'ALL' || ev.status === st;
+        return matchesQ && matchesSt;
+      });
+      renderEvents(filtered);
+    });
+
+    initDashboard();
+  </script>
+</body>
+</html>
